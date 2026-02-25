@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: finsight-backend
+  
+  datasource:
+    url: jdbc:h2:mem:finsight
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+  
+  sql:
+    init:
+      mode: always
+  
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: UTC
+
+server:
+  port: 8080
+
+jwt:
+  secret: finsight-secret-key-change-in-production-minimum-256-bits-required
+  expiration: 86400000 # 24 hours
+
+cors:
+  allowed-origins: http://localhost:3000
+
+logging:
+  level:
+    com.finsight: DEBUG
+    org.springframework.web: INFO
+    org.hibernate: INFO

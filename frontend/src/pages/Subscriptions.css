@@ -1,0 +1,148 @@
+.subscriptions {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.due-soon-banner {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #fbbf24;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
+}
+
+.banner-icon {
+  font-size: 3rem;
+}
+
+.banner-content {
+  flex: 1;
+}
+
+.banner-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #92400e;
+  margin-bottom: 0.25rem;
+}
+
+.banner-text {
+  color: #78350f;
+  font-size: 1rem;
+}
+
+.subscriptions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.subscription-card {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.subscription-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(30, 64, 175, 0.15);
+  border-color: #3b82f6;
+}
+
+.subscription-card.due-soon {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fbbf24;
+}
+
+.subscription-card.ignored {
+  opacity: 0.6;
+  background: #f8fafc;
+}
+
+.subscription-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subscription-icon {
+  font-size: 2.5rem;
+}
+
+.subscription-merchant {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.subscription-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e40af;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.subscription-frequency {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.subscription-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.subscription-date-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date-label {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.date-value {
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.date-value.due-soon-text {
+  color: #92400e;
+  font-weight: 700;
+}
+
+.subscription-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .subscriptions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .due-soon-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+}

@@ -1,0 +1,109 @@
+.fraud-alerts {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.alert-item {
+  padding: 1.5rem;
+  background: #fef2f2;
+  border: 2px solid #fecaca;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.alert-item.resolved {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  opacity: 0.7;
+}
+
+.alert-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}
+
+.alert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.alert-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.alert-date {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.alert-message {
+  font-size: 1.05rem;
+  color: #991b1b;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.alert-item.resolved .alert-message {
+  color: #166534;
+}
+
+.alert-transaction {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.alert-transaction-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.alert-transaction-category {
+  font-weight: 600;
+  color: #1e293b;
+  text-transform: capitalize;
+  font-size: 1.05rem;
+}
+
+.alert-transaction-amount {
+  font-weight: 700;
+  color: #ef4444;
+  font-size: 1.25rem;
+}
+
+.alert-transaction-details {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.alert-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .alert-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .alert-transaction-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
