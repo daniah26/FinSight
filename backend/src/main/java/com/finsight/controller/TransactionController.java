@@ -2,6 +2,7 @@ package com.finsight.controller;
 
 import com.finsight.dto.TransactionRequest;
 import com.finsight.dto.TransactionResponse;
+import com.finsight.service.DemoDataService;
 import com.finsight.service.TransactionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -19,6 +21,7 @@ import java.time.LocalDateTime;
 public class TransactionController {
     
     private final TransactionService transactionService;
+    private final DemoDataService demoDataService;
     
     @PostMapping
     public ResponseEntity<TransactionResponse> createTransaction(@Valid @RequestBody TransactionRequest request) {
@@ -43,5 +46,20 @@ public class TransactionController {
             userId, type, category, startDate, endDate, fraudulent, sortBy, sortDir, page, size);
         
         return ResponseEntity.ok(transactions);
+    }
+    
+    @PostMapping("/reseed-demo")
+    public ResponseEntity<Map<String, Object>> reseedDemoData(@RequestParam Long userId) {
+        try {
+            int count = demoDataService.forceReseedUser(userId);
+            return ResponseEntity.ok(Map.of(
+                "message", "Demo data reseeded successfully",
+                "transactionsCreated", count
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
+                "message", "Failed to reseed demo data: " + e.getMessage()
+            ));
+        }
     }
 }

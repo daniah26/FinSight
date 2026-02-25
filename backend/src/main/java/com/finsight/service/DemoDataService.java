@@ -1,8 +1,10 @@
 package com.finsight.service;
 
 import com.finsight.dto.FraudDetectionResult;
+import com.finsight.model.FraudAlert;
 import com.finsight.model.Transaction;
 import com.finsight.model.User;
+import com.finsight.repository.FraudAlertRepository;
 import com.finsight.repository.TransactionRepository;
 import com.finsight.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class DemoDataService {
     private final UserRepository userRepository;
     private final FraudDetectionService fraudDetectionService;
     private final AuditLogService auditLogService;
+    private final FraudAlertRepository fraudAlertRepository;
     
     private static final String[] CATEGORIES = {
         "groceries", "utilities", "entertainment", "transport", "subscriptions", "salary", "rent"
@@ -49,26 +52,99 @@ public class DemoDataService {
             return 0;
         }
         
+        return seedUser(user);
+    }
+    
+    /**
+     * Forces demo data reseed by deleting all existing transactions and creating new ones.
+     * 
+     * @param userId The user to reseed data for
+     * @return Number of transactions created
+     */
+    @Transactional
+    public int forceReseedUser(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+        
+        // Delete all existing fraud alerts first (foreign key constraint)
+        List<FraudAlert> existingAlerts = fraudAlertRepository.findByUserOrderByCreatedAtDesc(user);
+        if (!existingAlerts.isEmpty()) {
+            fraudAlertRepository.deleteAll(existingAlerts);
+            log.info("Deleted {} existing fraud alerts for user {}", existingAlerts.size(), userId);
+        }
+        
+        // Delete all existing transactions
+        List<Transaction> existingTransactions = transactionRepository.findByUserOrderByTransactionDateDesc(user);
+        if (!existingTransactions.isEmpty()) {
+            transactionRepository.deleteAll(existingTransactions);
+            log.info("Deleted {} existing transactions for user {}", existingTransactions.size(), userId);
+        }
+        
+        return seedUser(user);
+    }
+    
+    /**
+     * Internal method to seed demo transactions for a user.
+     * 
+     * @param user The user entity
+     * @return Number of transactions created
+     */
+    private int seedUser(User user) {
         // Deterministic seed based on userId
-        Random random = new Random(userId.hashCode());
+        Random random = new Random(user.getId().hashCode());
         
         List<Transaction> demoTransactions = generateDemoTransactions(user, random);
         
-        // Run fraud detection on each
+        int fraudAlertCount = 0;
+        
+        // Process each transaction individually: save, detect fraud, create alert
         for (Transaction txn : demoTransactions) {
+            // Save transaction FIRST (required for fraud detection to work)
+            txn = transactionRepository.save(txn);
+            
+            // Run fraud detection AFTER saving
             FraudDetectionResult result = fraudDetectionService.analyzeTransaction(txn);
+            
+            // Update transaction with fraud results
             txn.setFraudulent(result.isFraudulent());
             txn.setFraudScore(result.getFraudScore());
+            txn = transactionRepository.save(txn);
+            
+            // Create fraud alert if ANY rule triggered (score > 0)
+            if (result.getFraudScore() > 0 && !result.getReasons().isEmpty()) {
+                createFraudAlert(txn, result);
+                fraudAlertCount++;
+                log.info("Created fraud alert for demo transaction {} with score {} ({})", 
+                    txn.getId(), result.getFraudScore(), result.getRiskLevel());
+            }
         }
         
-        transactionRepository.saveAll(demoTransactions);
+        auditLogService.logAction(user.getId(), "SEED_DEMO_DATA", "TRANSACTION", 
+            null, String.format("{\"count\": %d, \"fraudAlerts\": %d}", demoTransactions.size(), fraudAlertCount));
         
-        auditLogService.logAction(userId, "SEED_DEMO_DATA", "TRANSACTION", 
-            null, String.format("{\"count\": %d}", demoTransactions.size()));
-        
-        log.info("Generated {} demo transactions for user {}", demoTransactions.size(), userId);
+        log.info("Generated {} demo transactions ({} fraud alerts) for user {}", 
+            demoTransactions.size(), fraudAlertCount, user.getId());
         
         return demoTransactions.size();
+    }
+    
+    /**
+     * Creates a fraud alert for a transaction.
+     */
+    private void createFraudAlert(Transaction transaction, FraudDetectionResult fraudResult) {
+        FraudAlert alert = FraudAlert.builder()
+            .user(transaction.getUser())
+            .transaction(transaction)
+            .message(String.format("Suspicious transaction detected: %s", 
+                String.join(", ", fraudResult.getReasons())))
+            .severity(fraudResult.getRiskLevel())
+            .resolved(false)
+            .createdAt(LocalDateTime.now())
+            .build();
+        
+        fraudAlertRepository.save(alert);
+        log.warn("Created fraud alert for transaction {} with severity {}", 
+            transaction.getId(), fraudResult.getRiskLevel());
     }
     
     /**
@@ -80,7 +156,7 @@ public class DemoDataService {
      */
     private List<Transaction> generateDemoTransactions(User user, Random random) {
         List<Transaction> transactions = new ArrayList<>();
-        int count = 25 + random.nextInt(26); // 25-50
+        int count = 35 + random.nextInt(16); // 35-50 (increased to ensure fraud scenarios)
         int daysBack = 60 + random.nextInt(31); // 60-90
         
         LocalDateTime startDate = LocalDateTime.now().minusDays(daysBack);
@@ -139,32 +215,105 @@ public class DemoDataService {
         };
     }
     
+    /**
+     * Adds fraud trigger scenarios to demo transactions.
+     * 
+     * Fraud Detection Rules:
+     * - High amount (>3x average): +30 points
+     * - Rapid-fire (5+ in 10 min): +25 points
+     * - Geographical anomaly (different location < 2 hours): +25 points
+     * - Unusual category (first time): +20 points
+     * - Score >= 70 = FRAUDULENT
+     * 
+     * Scenarios created:
+     * 1. High amount + unusual category = 50 points (MEDIUM risk)
+     * 2. Rapid-fire cluster = 25 points (LOW risk)
+     * 3. High amount + rapid-fire + unusual category = 75 points (HIGH FRAUD)
+     * 4. Geographical anomaly + high amount = 55 points (MEDIUM risk)
+     * 5. All rules triggered = 100 points (EXTREME FRAUD)
+     */
     private void addFraudTriggers(List<Transaction> transactions, User user, Random random) {
         if (transactions.isEmpty()) return;
         
-        // Add 1-2 high amount transactions (>3x average)
+        // Scenario 1: High amount + unusual category (30 + 20 = 50 points - MEDIUM risk)
         if (transactions.size() >= 3) {
             Transaction highAmountTxn = transactions.get(random.nextInt(transactions.size()));
             highAmountTxn.setAmount(BigDecimal.valueOf(5000 + random.nextInt(5001))); // Very high amount
-            highAmountTxn.setCategory("unusual_purchase");
-            highAmountTxn.setDescription("Demo high amount transaction");
+            highAmountTxn.setCategory("luxury_electronics");
+            highAmountTxn.setDescription("Demo: Expensive electronics purchase");
+            highAmountTxn.setTransactionDate(LocalDateTime.now().minusDays(5));
         }
         
-        // Add cluster of 5+ transactions within 10 minutes for rapid-fire detection
-        if (transactions.size() >= 5) {
-            LocalDateTime clusterTime = LocalDateTime.now().minusDays(random.nextInt(30));
+        // Scenario 2: Rapid-fire cluster (5 transactions in 10 minutes = 25 points - LOW risk)
+        if (transactions.size() >= 10) {
+            LocalDateTime clusterTime = LocalDateTime.now().minusDays(10);
             for (int i = 0; i < 5; i++) {
-                if (i < transactions.size()) {
-                    transactions.get(i).setTransactionDate(clusterTime.plusMinutes(i));
+                transactions.get(i).setTransactionDate(clusterTime.plusMinutes(i * 2));
+                transactions.get(i).setDescription("Demo: Rapid transaction " + (i + 1));
+                transactions.get(i).setAmount(BigDecimal.valueOf(50 + random.nextInt(100)));
+            }
+        }
+        
+        // Scenario 3: HIGH FRAUD - High amount + rapid-fire + unusual category (30 + 25 + 20 = 75 points)
+        if (transactions.size() >= 15) {
+            LocalDateTime fraudTime = LocalDateTime.now().minusDays(3);
+            
+            // Create 5 transactions in rapid succession with high amounts and unusual categories
+            for (int i = 0; i < 5; i++) {
+                int idx = 10 + i;
+                if (idx < transactions.size()) {
+                    Transaction fraudTxn = transactions.get(idx);
+                    fraudTxn.setTransactionDate(fraudTime.plusMinutes(i));
+                    fraudTxn.setAmount(BigDecimal.valueOf(3000 + random.nextInt(2001))); // High amounts
+                    fraudTxn.setCategory("crypto_exchange_" + i);
+                    fraudTxn.setDescription("Demo: Suspicious crypto transaction " + (i + 1));
+                    fraudTxn.setLocation("Foreign Location " + (i + 1));
                 }
             }
         }
         
-        // Add unusual category transaction
-        if (transactions.size() >= 2) {
-            Transaction unusualTxn = transactions.get(transactions.size() - 1);
-            unusualTxn.setCategory("rare_category_" + random.nextInt(1000));
-            unusualTxn.setDescription("Demo unusual category");
+        // Scenario 4: Geographical anomaly + high amount (25 + 30 = 55 points - MEDIUM risk)
+        if (transactions.size() >= 20) {
+            LocalDateTime geoTime = LocalDateTime.now().minusDays(7);
+            
+            // First transaction in Location A
+            Transaction txn1 = transactions.get(15);
+            txn1.setTransactionDate(geoTime);
+            txn1.setLocation("New York");
+            txn1.setAmount(BigDecimal.valueOf(100));
+            txn1.setDescription("Demo: Purchase in New York");
+            
+            // Second transaction in Location B within 1 hour (impossible travel)
+            Transaction txn2 = transactions.get(16);
+            txn2.setTransactionDate(geoTime.plusMinutes(30));
+            txn2.setLocation("Los Angeles");
+            txn2.setAmount(BigDecimal.valueOf(4000)); // High amount
+            txn2.setDescription("Demo: Suspicious purchase in Los Angeles");
+        }
+        
+        // Scenario 5: EXTREME FRAUD - All rules triggered (30 + 25 + 25 + 20 = 100 points)
+        if (transactions.size() >= 25) {
+            LocalDateTime extremeTime = LocalDateTime.now().minusDays(1);
+            
+            // Setup: Normal transaction in Location A
+            Transaction setup = transactions.get(20);
+            setup.setTransactionDate(extremeTime.minusHours(3));
+            setup.setLocation("Chicago");
+            setup.setAmount(BigDecimal.valueOf(50));
+            setup.setDescription("Demo: Normal purchase");
+            
+            // Create 5 rapid transactions in different location with high amounts and unusual categories
+            for (int i = 0; i < 5; i++) {
+                int idx = 21 + i;
+                if (idx < transactions.size()) {
+                    Transaction extremeTxn = transactions.get(idx);
+                    extremeTxn.setTransactionDate(extremeTime.plusMinutes(i));
+                    extremeTxn.setLocation("Tokyo"); // Different location within 2 hours
+                    extremeTxn.setAmount(BigDecimal.valueOf(8000 + random.nextInt(2001))); // Very high
+                    extremeTxn.setCategory("offshore_transfer_" + i); // Unusual category
+                    extremeTxn.setDescription("Demo: EXTREME FRAUD - Offshore transfer " + (i + 1));
+                }
+            }
         }
     }
 }

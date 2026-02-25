@@ -16,11 +16,16 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+  
+  sql:
+    init:
+      mode: always
   
   jackson:
     serialization:
