@@ -3,12 +3,15 @@ import { getTransactions, createTransaction } from '../services/api';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Badge from '../components/Badge';
+import FraudAlertModal from '../components/FraudAlertModal';
 import './Transactions.css';
 
 const Transactions = ({ userId }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [showFraudModal, setShowFraudModal] = useState(false);
+  const [fraudData, setFraudData] = useState(null);
   const [filters, setFilters] = useState({
     type: '',
     category: '',
@@ -46,11 +49,28 @@ const Transactions = ({ userId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createTransaction({
+      const response = await createTransaction({
         userId,
         ...formData,
         amount: parseFloat(formData.amount)
       });
+      
+      // Check if fraud was detected
+      const transaction = response.data;
+      if (transaction.fraudulent || (transaction.fraudScore && transaction.fraudScore > 0)) {
+        // Show fraud alert modal
+        setFraudData({
+          amount: transaction.amount,
+          category: transaction.category,
+          description: transaction.description,
+          location: transaction.location,
+          fraudScore: transaction.fraudScore,
+          riskLevel: transaction.riskLevel,
+          reasons: transaction.fraudReasons || []
+        });
+        setShowFraudModal(true);
+      }
+      
       setShowForm(false);
       setFormData({
         amount: '',
@@ -95,6 +115,12 @@ const Transactions = ({ userId }) => {
 
   return (
     <div className="transactions">
+      <FraudAlertModal
+        isOpen={showFraudModal}
+        onClose={() => setShowFraudModal(false)}
+        fraudData={fraudData}
+      />
+      
       <div className="page-header">
         <h1 className="page-title">Transactions</h1>
         <Button onClick={() => setShowForm(!showForm)}>

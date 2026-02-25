@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -24,4 +25,5 @@ public class TransactionResponse {
     private Double fraudScore;
     private String riskLevel;
     private String status;
+    private List<String> fraudReasons;
 }

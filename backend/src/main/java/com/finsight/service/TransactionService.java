@@ -80,7 +80,7 @@ public class TransactionService {
         log.info("Created transaction {} for user {} with fraud score {} (Risk: {})", 
             transaction.getId(), user.getId(), fraudResult.getFraudScore(), fraudResult.getRiskLevel());
         
-        return toResponse(transaction, fraudResult.getRiskLevel());
+        return toResponse(transaction, fraudResult);
     }
     
     /**
@@ -132,7 +132,7 @@ public class TransactionService {
         
         Page<Transaction> transactions = transactionRepository.findAll(spec, pageable);
         
-        return transactions.map(t -> toResponse(t, RiskLevel.fromScore(t.getFraudScore() != null ? t.getFraudScore() : 0.0)));
+        return transactions.map(t -> toResponse(t, null));
     }
     
     private void createFraudAlert(Transaction transaction, FraudDetectionResult fraudResult) {
@@ -150,7 +150,7 @@ public class TransactionService {
         log.warn("Created fraud alert for transaction {}", transaction.getId());
     }
     
-    private TransactionResponse toResponse(Transaction transaction, RiskLevel riskLevel) {
+    private TransactionResponse toResponse(Transaction transaction, FraudDetectionResult fraudResult) {
         return TransactionResponse.builder()
             .id(transaction.getId())
             .amount(transaction.getAmount())
@@ -161,8 +161,10 @@ public class TransactionService {
             .transactionDate(transaction.getTransactionDate())
             .fraudulent(transaction.isFraudulent())
             .fraudScore(transaction.getFraudScore())
-            .riskLevel(riskLevel != null ? riskLevel.name() : "LOW")
+            .riskLevel(fraudResult != null ? fraudResult.getRiskLevel().name() : 
+                RiskLevel.fromScore(transaction.getFraudScore() != null ? transaction.getFraudScore() : 0.0).name())
             .status(transaction.isFraudulent() ? "FLAGGED" : "COMPLETED")
+            .fraudReasons(fraudResult != null ? fraudResult.getReasons() : null)
             .build();
     }
 }
