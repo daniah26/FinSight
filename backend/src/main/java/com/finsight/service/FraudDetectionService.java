@@ -102,12 +102,13 @@ public class FraudDetectionService {
         score = Math.min(100.0, Math.max(0.0, score));
         
         RiskLevel riskLevel = calculateRiskLevel(score);
-        boolean fraudulent = score >= 70;
+        // Mark as fraudulent if ANY fraud indicators detected (score > 0)
+        boolean fraudulent = score > 0;
         
         log.info("=== Fraud detection complete: Score = {}, Risk = {}, Fraudulent = {} ===", 
             score, riskLevel, fraudulent);
         
-        if (fraudulent) {
+        if (score >= 70) {
             log.warn("HIGH FRAUD SCORE: {} for transaction {}. Reasons: {}", 
                 score, transaction.getId(), String.join("; ", reasons));
         } else if (score >= 40) {
