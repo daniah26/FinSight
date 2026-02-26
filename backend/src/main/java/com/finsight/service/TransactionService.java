@@ -97,9 +97,10 @@ public class TransactionService {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("type"), type));
         }
         
-        // Category filter
+        // Category filter - case-insensitive partial match
         if (category != null && !category.isBlank()) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("category"), category));
+            spec = spec.and((root, query, cb) -> 
+                cb.like(cb.lower(root.get("category")), "%" + category.toLowerCase() + "%"));
         }
         
         // Date range filter

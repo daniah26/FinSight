@@ -409,7 +409,7 @@ const Transactions = ({ userId }) => {
             <label>Category</label>
             <input
               type="text"
-              placeholder="Filter by category"
+              placeholder="Search categories..."
               value={filters.category}
               onChange={(e) => setFilters({ ...filters, category: e.target.value })}
               className="filter-input"
