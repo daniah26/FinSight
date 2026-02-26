@@ -114,7 +114,8 @@ const Transactions = ({ userId }) => {
       });
       
       const transaction = response.data;
-      if (transaction.fraudulent || (transaction.fraudScore && transaction.fraudScore > 0)) {
+      // Only show fraud alert popup for MEDIUM and HIGH risk (score >= 40)
+      if (transaction.fraudulent && transaction.fraudScore >= 40) {
         setFraudData({
           amount: transaction.amount,
           category: transaction.category,
