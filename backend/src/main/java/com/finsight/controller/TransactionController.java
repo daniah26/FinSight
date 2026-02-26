@@ -62,4 +62,30 @@ public class TransactionController {
             ));
         }
     }
+
+
+    @GetMapping("/debug/date-distribution")
+    public ResponseEntity<Map<String, Object>> getDateDistribution(@RequestParam Long userId) {
+        try {
+            var transactions = transactionService.findWithFilters(
+                userId, null, null, null, null, null, "transactionDate", "ASC", 0, 1000);
+
+            Map<String, Long> monthCounts = transactions.getContent().stream()
+                .collect(java.util.stream.Collectors.groupingBy(
+                    t -> t.getTransactionDate().getYear() + "-" +
+                         String.format("%02d", t.getTransactionDate().getMonthValue()),
+                    java.util.stream.Collectors.counting()
+                ));
+
+            return ResponseEntity.ok(Map.of(
+                "totalTransactions", transactions.getTotalElements(),
+                "monthDistribution", monthCounts
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
+                "error", e.getMessage()
+            ));
+        }
+    }
+
 }
