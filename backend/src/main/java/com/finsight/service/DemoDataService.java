@@ -142,14 +142,14 @@ public class DemoDataService {
     private List<Transaction> generateDemoTransactions(User user, Random random) {
         List<Transaction> transactions = new ArrayList<>();
 
-        // Generate transactions across 4 months for better trend analysis
+        // Generate transactions across 12 months for better trend analysis
         LocalDateTime now = LocalDateTime.now();
-        int[] transactionsPerMonth = {10, 12, 14, 15}; // Increasing trend over 4 months
+        int[] transactionsPerMonth = {12, 14, 15, 16, 18, 20, 22, 24, 25, 26, 28, 30}; // Increasing trend over 12 months
 
         log.info("Starting demo transaction generation. Current date: {}", now);
 
-        for (int monthIndex = 0; monthIndex < 4; monthIndex++) {
-            int monthsBack = 3 - monthIndex;
+        for (int monthIndex = 0; monthIndex < 12; monthIndex++) {
+            int monthsBack = 11 - monthIndex; // Go back 11 months from current month
             LocalDateTime monthStart = now.minusMonths(monthsBack)
                 .withDayOfMonth(1)
                 .withHour(0)
@@ -160,13 +160,8 @@ public class DemoDataService {
             int daysInMonth = monthStart.toLocalDate().lengthOfMonth();
             int txnCount = transactionsPerMonth[monthIndex];
 
-            log.info("Generating {} transactions for month: {}", txnCount, monthStart.getMonth());
+            log.info("Generating {} transactions for month: {} {}", txnCount, monthStart.getMonth(), monthStart.getYear());
             for (int i = 0; i < txnCount; i++) {
-                Transaction txn = Transaction.builder()
-                    .user(user)
-                    .createdAt(LocalDateTime.now())
-                    .build();
-
                 int dayOfMonth = 1 + random.nextInt(daysInMonth);
                 int hour = 8 + random.nextInt(14); // 8 AM - 10 PM
                 int minute = random.nextInt(60);
@@ -175,6 +170,11 @@ public class DemoDataService {
                     .withDayOfMonth(dayOfMonth)
                     .withHour(hour)
                     .withMinute(minute);
+
+                Transaction txn = Transaction.builder()
+                    .user(user)
+                    .createdAt(txnDate)
+                    .build();
 
                 txn.setTransactionDate(txnDate);
 
@@ -188,12 +188,12 @@ public class DemoDataService {
                 transactions.add(txn);
 
                 if (i == 0) {
-                    log.info("  First transaction date: {}", txnDate);
+                    log.info("  First transaction date: {} {}", txnDate.getMonth(), txnDate.getYear());
                 }
             }
         }
 
-        log.info("Generated {} total transactions across 4 months", transactions.size());
+        log.info("Generated {} total transactions across 12 months", transactions.size());
 
         addFraudTriggers(transactions, user, random);
 

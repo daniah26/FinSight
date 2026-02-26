@@ -15,7 +15,9 @@ const Transactions = ({ userId }) => {
   const [filters, setFilters] = useState({
     type: '',
     category: '',
-    fraudulent: ''
+    fraudulent: '',
+    startDate: '',
+    endDate: ''
   });
   const [formData, setFormData] = useState({
     amount: '',
@@ -35,7 +37,9 @@ const Transactions = ({ userId }) => {
       setLoading(true);
       const params = {
         ...filters,
-        fraudulent: filters.fraudulent === '' ? undefined : filters.fraudulent === 'true'
+        fraudulent: filters.fraudulent === '' ? undefined : filters.fraudulent === 'true',
+        startDate: filters.startDate ? new Date(filters.startDate).toISOString() : undefined,
+        endDate: filters.endDate ? new Date(filters.endDate).toISOString() : undefined
       };
       const response = await getTransactions(userId, params);
       setTransactions(response.data.content || []);
@@ -234,10 +238,24 @@ const Transactions = ({ userId }) => {
             <option value="false">Non-Fraudulent</option>
           </select>
 
+          <input
+            type="date"
+            placeholder="Start Date"
+            value={filters.startDate}
+            onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
+          />
+
+          <input
+            type="date"
+            placeholder="End Date"
+            value={filters.endDate}
+            onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
+          />
+
           <Button 
             variant="secondary" 
             size="small"
-            onClick={() => setFilters({ type: '', category: '', fraudulent: '' })}
+            onClick={() => setFilters({ type: '', category: '', fraudulent: '', startDate: '', endDate: '' })}
           >
             Clear Filters
           </Button>
