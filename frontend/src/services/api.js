@@ -14,6 +14,18 @@ export const getTransactions = (userId, params = {}) => {
   return api.get('/transactions', { params: { userId, ...params } });
 };
 
+export const getAllTransactions = async (userId, params = {}) => {
+  // Fetch with a large size to get all transactions
+  return api.get('/transactions', { 
+    params: { 
+      userId, 
+      ...params,
+      size: 10000, // Large number to get all transactions
+      page: 0 
+    } 
+  });
+};
+
 export const createTransaction = (data) => {
   return api.post('/transactions', data);
 };

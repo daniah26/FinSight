@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { getDashboardSummary } from '../services/api';
+import { getDashboardSummary, getAllTransactions } from '../services/api';
 import Card from '../components/Card';
+import TransactionCharts from '../components/TransactionCharts';
 import './Dashboard.css';
 
 const Dashboard = ({ userId }) => {
   const [summary, setSummary] = useState(null);
+  const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,8 +16,12 @@ const Dashboard = ({ userId }) => {
   const loadDashboard = async () => {
     try {
       setLoading(true);
-      const response = await getDashboardSummary(userId);
-      setSummary(response.data);
+      const [summaryResponse, transactionsResponse] = await Promise.all([
+        getDashboardSummary(userId),
+        getAllTransactions(userId, {})
+      ]);
+      setSummary(summaryResponse.data);
+      setTransactions(transactionsResponse.data.content || []);
     } catch (error) {
       console.error('Error loading dashboard:', error);
     } finally {
@@ -78,6 +84,8 @@ const Dashboard = ({ userId }) => {
           </div>
         </Card>
       </div>
+
+      <TransactionCharts transactions={transactions} />
 
       <div className="charts-grid">
         <Card title="Spending by Category">

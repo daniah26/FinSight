@@ -21,6 +21,11 @@
   margin-bottom: 2rem;
 }
 
+/* Transaction charts section */
+.dashboard .charts-container {
+  margin-bottom: 2rem;
+}
+
 .stat-card {
   padding: 1.5rem !important;
   display: flex;
