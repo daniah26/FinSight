@@ -4,7 +4,6 @@ import com.finsight.dto.SubscriptionDto;
 import com.finsight.model.Subscription;
 import com.finsight.model.SubscriptionStatus;
 import com.finsight.repository.SubscriptionRepository;
-import com.finsight.service.AuditLogService;
 import com.finsight.service.SubscriptionDetectorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ public class SubscriptionController {
     
     private final SubscriptionDetectorService subscriptionDetectorService;
     private final SubscriptionRepository subscriptionRepository;
-    private final AuditLogService auditLogService;
     
     @GetMapping
     public ResponseEntity<List<SubscriptionDto>> getSubscriptions(@RequestParam Long userId) {
@@ -53,9 +51,6 @@ public class SubscriptionController {
         
         subscription.setStatus(SubscriptionStatus.IGNORED);
         subscription = subscriptionRepository.save(subscription);
-        
-        auditLogService.logAction(userId, "IGNORE_SUBSCRIPTION", "SUBSCRIPTION", 
-            id, String.format("{\"subscriptionId\": %d}", id));
         
         return ResponseEntity.ok(toDto(subscription));
     }

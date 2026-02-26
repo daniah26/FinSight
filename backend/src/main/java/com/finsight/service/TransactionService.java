@@ -30,7 +30,6 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
     private final FraudDetectionService fraudDetectionService;
-    private final AuditLogService auditLogService;
     private final FraudAlertRepository fraudAlertRepository;
     
     /**
@@ -71,11 +70,6 @@ public class TransactionService {
             log.info("Created fraud alert for transaction {} with score {} ({})", 
                 transaction.getId(), fraudResult.getFraudScore(), fraudResult.getRiskLevel());
         }
-        
-        // Log action
-        auditLogService.logAction(user.getId(), "CREATE_TRANSACTION", "TRANSACTION", 
-            transaction.getId(), String.format("{\"amount\": %s, \"category\": \"%s\", \"fraudScore\": %.2f}", 
-                transaction.getAmount(), transaction.getCategory(), fraudResult.getFraudScore()));
         
         log.info("Created transaction {} for user {} with fraud score {} (Risk: {})", 
             transaction.getId(), user.getId(), fraudResult.getFraudScore(), fraudResult.getRiskLevel());

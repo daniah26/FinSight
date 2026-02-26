@@ -22,7 +22,6 @@ public class FraudAlertService {
     
     private final FraudAlertRepository fraudAlertRepository;
     private final UserRepository userRepository;
-    private final AuditLogService auditLogService;
     
     /**
      * Retrieves fraud alerts with optional filtering.
@@ -65,9 +64,6 @@ public class FraudAlertService {
         
         alert.setResolved(true);
         alert = fraudAlertRepository.save(alert);
-        
-        auditLogService.logAction(userId, "RESOLVE_ALERT", "FRAUD_ALERT", 
-            alertId, String.format("{\"alertId\": %d}", alertId));
         
         log.info("Resolved fraud alert {} for user {}", alertId, userId);
         
