@@ -22,7 +22,18 @@ const FraudAlerts = ({ userId }) => {
         severity: filter.severity || undefined
       };
       const response = await getFraudAlerts(userId, params.resolved, params.severity);
-      setAlerts(response.data || []);
+      
+      // Sort alerts: unresolved first, then resolved
+      const sortedAlerts = (response.data || []).sort((a, b) => {
+        // First sort by resolved status (false before true)
+        if (a.resolved !== b.resolved) {
+          return a.resolved ? 1 : -1;
+        }
+        // Then sort by date (newest first)
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      
+      setAlerts(sortedAlerts);
     } catch (error) {
       console.error('Error loading alerts:', error);
     } finally {
