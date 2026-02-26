@@ -32,7 +32,7 @@ public class SubscriptionDetectorService {
     /**
      * Detects subscriptions from user's transaction history.
      * Groups by merchant, finds recurring patterns (20-40 days apart).
-     * Only creates one subscription per merchant, even with multiple payments.
+     * Merges with existing subscriptions to preserve status (IGNORED).
      * 
      * @param userId The user to analyze
      * @return List of detected subscriptions
@@ -42,9 +42,14 @@ public class SubscriptionDetectorService {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found: " + userId));
         
-        // Clear existing subscriptions for this user to avoid duplicates
+        // Get existing subscriptions to preserve their status
         List<Subscription> existingSubs = subscriptionRepository.findByUser(user);
-        subscriptionRepository.deleteAll(existingSubs);
+        Map<String, Subscription> existingByMerchant = existingSubs.stream()
+            .collect(Collectors.toMap(
+                s -> normalizeMerchant(s.getMerchant()),
+                s -> s,
+                (s1, s2) -> s1 // Keep first if duplicates
+            ));
         
         List<Transaction> expenses = transactionRepository.findByUserAndType(user, "EXPENSE");
         
@@ -93,11 +98,22 @@ public class SubscriptionDetectorService {
             
             // Need at least 1 recurring pattern (2 transactions ~30 days apart)
             if (recurringCount >= 1) {
-                // Create ONE subscription per merchant using filtered transactions
-                Subscription sub = createSubscription(user, entry.getKey(), filteredTxns);
-                subscriptions.add(sub);
-                log.info("Detected subscription for user {}: merchant={}, avgAmount={}, nextDue={}, transactionCount={}", 
-                    userId, sub.getMerchant(), sub.getAvgAmount(), sub.getNextDueDate(), filteredTxns.size());
+                String normalizedMerchant = entry.getKey();
+                Subscription existingSub = existingByMerchant.get(normalizedMerchant);
+                
+                if (existingSub != null) {
+                    // Update existing subscription with new data but preserve status
+                    updateSubscription(existingSub, filteredTxns);
+                    subscriptions.add(existingSub);
+                    log.info("Updated existing subscription for user {}: merchant={}, status={}", 
+                        userId, existingSub.getMerchant(), existingSub.getStatus());
+                } else {
+                    // Create new subscription
+                    Subscription sub = createSubscription(user, entry.getKey(), filteredTxns);
+                    subscriptions.add(sub);
+                    log.info("Detected new subscription for user {}: merchant={}, avgAmount={}, nextDue={}", 
+                        userId, sub.getMerchant(), sub.getAvgAmount(), sub.getNextDueDate());
+                }
             }
         }
         
@@ -123,33 +139,20 @@ public class SubscriptionDetectorService {
     
     /**
      * Normalizes merchant name for matching.
-     * Extracts key words and removes common noise.
+     * For categories, just use lowercase.
      */
     private String normalizeMerchant(String merchant) {
         if (merchant == null) return "unknown";
-        
-        String normalized = merchant.toLowerCase()
-            .replaceAll("[^a-z0-9\\s]", "") // Keep spaces for better matching
-            .trim();
-        
-        // Extract first significant word (usually the merchant name)
-        String[] words = normalized.split("\\s+");
-        if (words.length > 0 && words[0].length() >= 3) {
-            return words[0];
-        }
-        
-        return normalized.replaceAll("\\s+", "");
+        return merchant.toLowerCase().trim();
     }
     
     /**
-     * Groups transactions by normalized merchant.
+     * Groups transactions by category (for subscription detection).
      */
     private Map<String, List<Transaction>> groupByMerchant(List<Transaction> transactions) {
         return transactions.stream()
-            .filter(t -> t.getDescription() != null)
-            .collect(Collectors.groupingBy(
-                t -> normalizeMerchant(t.getDescription())
-            ));
+            .filter(t -> t.getCategory() != null)
+            .collect(Collectors.groupingBy(Transaction::getCategory));
     }
     
     private Subscription createSubscription(User user, String normalizedMerchant, List<Transaction> txns) {
@@ -168,12 +171,33 @@ public class SubscriptionDetectorService {
         
         return Subscription.builder()
             .user(user)
-            .merchant(txns.get(0).getDescription()) // Use original description
+            .merchant(txns.get(0).getCategory()) // Use category as merchant name
             .avgAmount(avgAmount)
             .lastPaidDate(lastPaidDate)
             .nextDueDate(nextDueDate)
             .status(SubscriptionStatus.ACTIVE)
             .createdAt(LocalDateTime.now())
             .build();
+    }
+    
+    private void updateSubscription(Subscription subscription, List<Transaction> txns) {
+        // Calculate average amount
+        BigDecimal avgAmount = txns.stream()
+            .map(Transaction::getAmount)
+            .reduce(BigDecimal.ZERO, BigDecimal::add)
+            .divide(BigDecimal.valueOf(txns.size()), 2, RoundingMode.HALF_UP);
+        
+        // Get last payment date
+        Transaction lastTxn = txns.get(txns.size() - 1);
+        LocalDate lastPaidDate = lastTxn.getTransactionDate().toLocalDate();
+        
+        // Calculate next due date (last + 30 days)
+        LocalDate nextDueDate = lastPaidDate.plusDays(30);
+        
+        // Update fields but preserve status
+        subscription.setAvgAmount(avgAmount);
+        subscription.setLastPaidDate(lastPaidDate);
+        subscription.setNextDueDate(nextDueDate);
+        // Status is preserved - don't change it
     }
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,17 @@ public class SubscriptionController {
     
     @GetMapping
     public ResponseEntity<List<SubscriptionDto>> getSubscriptions(@RequestParam Long userId) {
+        // Get existing subscriptions instead of re-detecting every time
+        List<Subscription> subscriptions = subscriptionRepository.findByUserId(userId);
+        List<SubscriptionDto> dtos = subscriptions.stream()
+            .map(this::toDto)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
+    
+    @PostMapping("/detect")
+    public ResponseEntity<List<SubscriptionDto>> detectSubscriptions(@RequestParam Long userId) {
+        // Separate endpoint for detecting/refreshing subscriptions
         List<Subscription> subscriptions = subscriptionDetectorService.detectSubscriptions(userId);
         List<SubscriptionDto> dtos = subscriptions.stream()
             .map(this::toDto)
@@ -34,7 +46,10 @@ public class SubscriptionController {
             @RequestParam Long userId,
             @RequestParam(required = false, defaultValue = "7") int days) {
         
-        List<Subscription> subscriptions = subscriptionDetectorService.findDueSoon(userId, days);
+        LocalDate start = LocalDate.now();
+        LocalDate end = start.plusDays(days);
+        
+        List<Subscription> subscriptions = subscriptionRepository.findDueSoonByUserId(userId, start, end);
         List<SubscriptionDto> dtos = subscriptions.stream()
             .map(this::toDto)
             .collect(Collectors.toList());

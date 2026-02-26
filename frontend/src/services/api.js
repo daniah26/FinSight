@@ -49,6 +49,10 @@ export const getSubscriptions = (userId) => {
   return api.get('/subscriptions', { params: { userId } });
 };
 
+export const detectSubscriptions = (userId) => {
+  return api.post('/subscriptions/detect', null, { params: { userId } });
+};
+
 export const getDueSoonSubscriptions = (userId, days = 7) => {
   return api.get('/subscriptions/due-soon', { params: { userId, days } });
 };

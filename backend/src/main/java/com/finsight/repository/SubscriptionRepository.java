@@ -15,6 +15,9 @@ import java.util.List;
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
     List<Subscription> findByUser(User user);
     
+    @Query("SELECT s FROM Subscription s WHERE s.user.id = :userId")
+    List<Subscription> findByUserId(@Param("userId") Long userId);
+    
     List<Subscription> findByUserAndStatus(User user, SubscriptionStatus status);
     
     @Query("SELECT s FROM Subscription s WHERE s.user = :user " +
@@ -23,4 +26,11 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
     List<Subscription> findDueSoon(@Param("user") User user, 
                                    @Param("start") LocalDate start,
                                    @Param("end") LocalDate end);
+    
+    @Query("SELECT s FROM Subscription s WHERE s.user.id = :userId " +
+           "AND s.status = 'ACTIVE' " +
+           "AND s.nextDueDate BETWEEN :start AND :end")
+    List<Subscription> findDueSoonByUserId(@Param("userId") Long userId, 
+                                           @Param("start") LocalDate start,
+                                           @Param("end") LocalDate end);
 }
