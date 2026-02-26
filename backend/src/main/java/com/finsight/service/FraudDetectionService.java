@@ -102,8 +102,10 @@ public class FraudDetectionService {
         score = Math.min(100.0, Math.max(0.0, score));
         
         RiskLevel riskLevel = calculateRiskLevel(score);
-        // Mark as fraudulent if ANY fraud indicators detected (score > 0)
-        boolean fraudulent = score > 0;
+        // Mark as fraudulent only if:
+        // 1. Transaction is an EXPENSE (not INCOME)
+        // 2. Score >= 40 (MEDIUM or HIGH severity)
+        boolean fraudulent = "EXPENSE".equals(transaction.getType()) && score >= 40;
         
         log.info("=== Fraud detection complete: Score = {}, Risk = {}, Fraudulent = {} ===", 
             score, riskLevel, fraudulent);

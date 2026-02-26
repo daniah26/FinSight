@@ -108,8 +108,8 @@ public class DemoDataService {
             txn.setFraudScore(result.getFraudScore());
             txn = transactionRepository.save(txn);
 
-            // Create fraud alert if ANY rule triggered (score > 0)
-            if (result.getFraudScore() > 0 && !result.getReasons().isEmpty()) {
+            // Create fraud alert only for MEDIUM and HIGH severity (score >= 40)
+            if (result.getFraudScore() >= 40 && !result.getReasons().isEmpty()) {
                 createFraudAlert(txn, result);
                 fraudAlertCount++;
                 log.info("Created fraud alert for demo transaction {} with score {} ({})",

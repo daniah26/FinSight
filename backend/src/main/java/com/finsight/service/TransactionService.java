@@ -64,8 +64,8 @@ public class TransactionService {
         transaction.setFraudScore(fraudResult.getFraudScore());
         transaction = transactionRepository.save(transaction);
         
-        // Create fraud alert if ANY rule triggered (score > 0)
-        if (fraudResult.getFraudScore() > 0 && !fraudResult.getReasons().isEmpty()) {
+        // Create fraud alert only for MEDIUM and HIGH severity (score >= 40)
+        if (fraudResult.getFraudScore() >= 40 && !fraudResult.getReasons().isEmpty()) {
             createFraudAlert(transaction, fraudResult);
             log.info("Created fraud alert for transaction {} with score {} ({})", 
                 transaction.getId(), fraudResult.getFraudScore(), fraudResult.getRiskLevel());
