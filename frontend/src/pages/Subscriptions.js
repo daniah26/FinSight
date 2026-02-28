@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getSubscriptions, getDueSoonSubscriptions, ignoreSubscription, detectSubscriptions } from '../services/api';
+import { getDueSoonSubscriptions, ignoreSubscription, detectSubscriptions } from '../services/api';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Badge from '../components/Badge';
@@ -18,19 +18,19 @@ const Subscriptions = ({ userId }) => {
   const loadSubscriptions = async () => {
     try {
       setLoading(true);
-      
-      // Always detect/refresh subscriptions when loading the page
+
+      // Step 1: Run detection first (saves to DB)
       const subsResponse = await detectSubscriptions(userId);
-      const dueResponse = await getDueSoonSubscriptions(userId, 7);
-      
-      // Ensure we're setting arrays
       const newSubs = Array.isArray(subsResponse.data) ? subsResponse.data : [];
+
+      // Step 2: THEN fetch due-soon (reads the freshly-saved data)
+      const dueResponse = await getDueSoonSubscriptions(userId, 7);
       const newDue = Array.isArray(dueResponse.data) ? dueResponse.data : [];
-      
+
       setSubscriptions(newSubs);
       setDueSoon(newDue);
-      
-      console.log('Subscriptions loaded:', newSubs.length, 'subscriptions found');
+
+      console.log(`Subscriptions loaded: ${newSubs.length} total, ${newDue.length} due soon`);
     } catch (error) {
       console.error('Error loading subscriptions:', error);
       setSubscriptions([]);
@@ -46,7 +46,6 @@ const Subscriptions = ({ userId }) => {
 
   const handleConfirmIgnore = async () => {
     if (!confirmIgnore) return;
-    
     try {
       await ignoreSubscription(confirmIgnore.id, userId);
       setConfirmIgnore(null);
@@ -64,22 +63,20 @@ const Subscriptions = ({ userId }) => {
   const handleRefresh = async () => {
     try {
       setLoading(true);
-      // Clear existing state first to force a clean refresh
       setSubscriptions([]);
       setDueSoon([]);
-      
-      // Force re-detection of subscriptions
+
       const subsResponse = await detectSubscriptions(userId);
-      const dueResponse = await getDueSoonSubscriptions(userId, 7);
-      
-      // Ensure we're setting fresh data
       const newSubs = Array.isArray(subsResponse.data) ? subsResponse.data : [];
+
+      // Sequential: due-soon after detection completes
+      const dueResponse = await getDueSoonSubscriptions(userId, 7);
       const newDue = Array.isArray(dueResponse.data) ? dueResponse.data : [];
-      
+
       setSubscriptions(newSubs);
       setDueSoon(newDue);
-      
-      console.log('Subscriptions refreshed:', newSubs.length, 'subscriptions found');
+
+      console.log(`Subscriptions refreshed: ${newSubs.length} total, ${newDue.length} due soon`);
     } catch (error) {
       console.error('Error refreshing subscriptions:', error);
       alert('Failed to refresh subscriptions');
@@ -96,20 +93,26 @@ const Subscriptions = ({ userId }) => {
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    // Parse as local date to avoid UTC timezone shift (e.g. "2025-03-01" → Mar 1, not Feb 28)
+    const [year, month, day] = dateString.split('T')[0].split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
     });
   };
 
+  // Returns days until due date, using local date comparison to avoid timezone bugs
   const getDaysUntil = (dateString) => {
-    const date = new Date(dateString);
+    const [year, month, day] = dateString.split('T')[0].split('-').map(Number);
+    const dueDate = new Date(year, month - 1, day);
     const today = new Date();
-    const diffTime = date - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    today.setHours(0, 0, 0, 0);
+    const diffTime = dueDate - today;
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
+
+  const activeSubscriptions = subscriptions.filter(sub => sub.status !== 'IGNORED');
 
   return (
     <div className="subscriptions">
@@ -125,14 +128,12 @@ const Subscriptions = ({ userId }) => {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>Ignore Subscription?</h2>
             <p>Are you sure you want to ignore <strong>{confirmIgnore.merchant}</strong>?</p>
-            <p className="modal-note">This subscription will be hidden from your list and you won't receive alerts for it.</p>
+            <p className="modal-note">
+              This subscription will be hidden from your list and you won't receive alerts for it.
+            </p>
             <div className="modal-actions">
-              <Button variant="secondary" onClick={handleCancelIgnore}>
-                Cancel
-              </Button>
-              <Button variant="danger" onClick={handleConfirmIgnore}>
-                Ignore Subscription
-              </Button>
+              <Button variant="secondary" onClick={handleCancelIgnore}>Cancel</Button>
+              <Button variant="danger" onClick={handleConfirmIgnore}>Ignore Subscription</Button>
             </div>
           </div>
         </div>
@@ -150,68 +151,69 @@ const Subscriptions = ({ userId }) => {
         </div>
       )}
 
-      <Card title={`All Subscriptions (${subscriptions.filter(sub => sub.status !== 'IGNORED').length})`}>
+      <Card title={`All Subscriptions (${activeSubscriptions.length})`}>
         {loading ? (
-          <div className="loading">Loading subscriptions...</div>
-        ) : subscriptions.filter(sub => sub.status !== 'IGNORED').length === 0 ? (
-          <div className="empty-state">No subscriptions detected</div>
+          <div className="loading">Detecting subscriptions…</div>
+        ) : activeSubscriptions.length === 0 ? (
+          <div className="empty-state">
+            No subscriptions detected. Add two EXPENSE transactions with the same category
+            in two consecutive months to get started.
+          </div>
         ) : (
           <div className="subscriptions-grid">
-            {subscriptions
-              .filter(sub => sub.status !== 'IGNORED')
-              .map((subscription) => {
-                const daysUntil = getDaysUntil(subscription.nextDueDate);
-                const isDueSoon = daysUntil <= 7 && daysUntil >= 0;
-                
-                return (
-                  <div 
-                    key={subscription.id} 
-                    className={`subscription-card ${isDueSoon ? 'due-soon' : ''}`}
-                  >
-                    <div className="subscription-header">
-                      <div className="subscription-icon">📱</div>
-                      <div className="subscription-badges">
-                        {isDueSoon ? (
-                          <Badge variant="warning">Due Soon</Badge>
-                        ) : (
-                          <Badge variant="success">Active</Badge>
-                        )}
-                      </div>
-                    </div>
+            {activeSubscriptions.map((subscription) => {
+              const daysUntil = getDaysUntil(subscription.nextDueDate);
+              const isDueSoon = daysUntil >= 0 && daysUntil <= 7;
 
-                    <div className="subscription-merchant">{subscription.merchant}</div>
-                    
-                    <div className="subscription-amount">
-                      {formatCurrency(subscription.avgAmount)}
-                      <span className="subscription-frequency">/month</span>
-                    </div>
-
-                    <div className="subscription-dates">
-                      <div className="subscription-date-item">
-                        <span className="date-label">Last Paid:</span>
-                        <span className="date-value">{formatDate(subscription.lastPaidDate)}</span>
-                      </div>
-                      <div className="subscription-date-item">
-                        <span className="date-label">Next Due:</span>
-                        <span className={`date-value ${isDueSoon ? 'due-soon-text' : ''}`}>
-                          {formatDate(subscription.nextDueDate)}
-                          {isDueSoon && ` (${daysUntil} days)`}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="subscription-actions">
-                      <Button 
-                        variant="secondary" 
-                        size="small"
-                        onClick={() => handleIgnoreClick(subscription)}
-                      >
-                        Ignore
-                      </Button>
+              return (
+                <div
+                  key={subscription.id}
+                  className={`subscription-card ${isDueSoon ? 'due-soon' : ''}`}
+                >
+                  <div className="subscription-header">
+                    <div className="subscription-icon">📱</div>
+                    <div className="subscription-badges">
+                      {isDueSoon ? (
+                        <Badge variant="warning">Due Soon</Badge>
+                      ) : (
+                        <Badge variant="success">Active</Badge>
+                      )}
                     </div>
                   </div>
-                );
-              })}
+
+                  <div className="subscription-merchant">{subscription.merchant}</div>
+
+                  <div className="subscription-amount">
+                    {formatCurrency(subscription.avgAmount)}
+                    <span className="subscription-frequency">/month</span>
+                  </div>
+
+                  <div className="subscription-dates">
+                    <div className="subscription-date-item">
+                      <span className="date-label">Last Paid:</span>
+                      <span className="date-value">{formatDate(subscription.lastPaidDate)}</span>
+                    </div>
+                    <div className="subscription-date-item">
+                      <span className="date-label">Next Due:</span>
+                      <span className={`date-value ${isDueSoon ? 'due-soon-text' : ''}`}>
+                        {formatDate(subscription.nextDueDate)}
+                        {isDueSoon && ` (${daysUntil} day${daysUntil !== 1 ? 's' : ''})`}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="subscription-actions">
+                    <Button
+                      variant="secondary"
+                      size="small"
+                      onClick={() => handleIgnoreClick(subscription)}
+                    >
+                      Ignore
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </Card>

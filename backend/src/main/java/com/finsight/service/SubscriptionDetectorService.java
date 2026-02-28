@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,180 +25,177 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class SubscriptionDetectorService {
-    
+
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
     private final SubscriptionRepository subscriptionRepository;
-    
+
+    /**
+     * Maximum allowed variance between transaction amounts to still be considered
+     * a fixed-price subscription. 1% handles minor rounding/currency differences
+     * while rejecting variable-spend categories like groceries.
+     */
+    private static final double AMOUNT_TOLERANCE_PERCENT = 1.0;
+
     /**
      * Detects subscriptions from user's transaction history.
-     * Groups by merchant, finds recurring patterns (20-40 days apart).
-     * Merges with existing subscriptions to preserve status (IGNORED).
-     * 
+     *
+     * Strict rules — ALL must pass:
+     *   1. EXPENSE transactions grouped by category (case-insensitive).
+     *   2. Exactly ONE transaction per month in every month it appears
+     *      (categories with 2+ transactions in any month are rejected — e.g. groceries).
+     *   3. Transactions appear in at least 2 consecutive calendar months.
+     *   4. All transaction amounts are identical (within 1% tolerance).
+     *      Variable-spend categories (electricity bills, groceries) are rejected.
+     *
      * @param userId The user to analyze
-     * @return List of detected subscriptions
+     * @return List of detected/updated subscriptions
      */
     @Transactional
     public List<Subscription> detectSubscriptions(Long userId) {
         User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found: " + userId));
-        
-        // Get existing subscriptions to preserve their status
+                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+
+        // Preserve existing subscription statuses (especially IGNORED)
         List<Subscription> existingSubs = subscriptionRepository.findByUser(user);
-        Map<String, Subscription> existingByMerchant = existingSubs.stream()
-            .collect(Collectors.toMap(
-                s -> normalizeMerchant(s.getMerchant()),
-                s -> s,
-                (s1, s2) -> s1 // Keep first if duplicates
-            ));
-        
-        List<Transaction> expenses = transactionRepository.findByUserAndType(user, "EXPENSE");
-        
-        Map<String, List<Transaction>> byMerchant = groupByMerchant(expenses);
-        List<Subscription> subscriptions = new ArrayList<>();
-        
-        for (Map.Entry<String, List<Transaction>> entry : byMerchant.entrySet()) {
+        Map<String, Subscription> existingByCategory = existingSubs.stream()
+                .collect(Collectors.toMap(
+                        s -> s.getMerchant().toLowerCase().trim(),
+                        s -> s,
+                        (s1, s2) -> s1
+                ));
+
+        // Fetch ALL transactions — case-insensitive type filter handles
+        // any casing variation ("EXPENSE", "expense", "Expense")
+        List<Transaction> allTxns = transactionRepository.findByUserOrderByTransactionDateDesc(user);
+        List<Transaction> expenses = allTxns.stream()
+                .filter(t -> t.getType() != null && t.getType().equalsIgnoreCase("EXPENSE"))
+                .filter(t -> t.getCategory() != null && !t.getCategory().isBlank())
+                .collect(Collectors.toList());
+
+        log.info("User {}: {} total transactions, {} EXPENSE transactions found",
+                userId, allTxns.size(), expenses.size());
+
+        // Group by normalized (lowercase) category
+        Map<String, List<Transaction>> byCategory = expenses.stream()
+                .collect(Collectors.groupingBy(t -> t.getCategory().toLowerCase().trim()));
+
+        List<Subscription> detectedSubscriptions = new ArrayList<>();
+
+        for (Map.Entry<String, List<Transaction>> entry : byCategory.entrySet()) {
+            String normalizedCategory = entry.getKey();
             List<Transaction> txns = entry.getValue();
-            if (txns.size() < 2) continue;
-            
+
+            // Sort ascending by date
             txns.sort(Comparator.comparing(Transaction::getTransactionDate));
-            
-            // Filter out transactions that are too close together (less than 20 days)
-            // This prevents multiple payments in the same month from being counted separately
-            List<Transaction> filteredTxns = new ArrayList<>();
-            filteredTxns.add(txns.get(0)); // Always add the first transaction
-            
-            for (int i = 1; i < txns.size(); i++) {
-                long daysSinceLast = ChronoUnit.DAYS.between(
-                    filteredTxns.get(filteredTxns.size() - 1).getTransactionDate(),
-                    txns.get(i).getTransactionDate()
-                );
-                
-                // Only include if it's at least 20 days since the last included transaction
-                if (daysSinceLast >= 20) {
-                    filteredTxns.add(txns.get(i));
+
+            // Group by calendar month
+            Map<YearMonth, List<Transaction>> byMonth = txns.stream()
+                    .collect(Collectors.groupingBy(t ->
+                            YearMonth.from(t.getTransactionDate().toLocalDate())));
+
+            // ── Rule 1: Exactly ONE transaction per month ──────────────────────
+            // If any month has more than 1 transaction, this is not a subscription
+            // (e.g. groceries bought 3x a month, or utility bills with adjustments)
+            boolean multipleInAnyMonth = byMonth.values().stream()
+                    .anyMatch(monthTxns -> monthTxns.size() > 1);
+
+            if (multipleInAnyMonth) {
+                log.info("Category '{}': multiple transactions in a single month — not a subscription (e.g. groceries)",
+                        normalizedCategory);
+                continue;
+            }
+
+            // From here on, exactly one transaction per month — use those directly
+            List<YearMonth> months = byMonth.keySet().stream()
+                    .sorted()
+                    .collect(Collectors.toList());
+
+            log.info("Category '{}': 1 transaction/month in months: {}", normalizedCategory, months);
+
+            // ── Rule 2: At least 2 consecutive calendar months ─────────────────
+            boolean hasConsecutiveMonths = false;
+            for (int i = 1; i < months.size(); i++) {
+                if (ChronoUnit.MONTHS.between(months.get(i - 1), months.get(i)) == 1) {
+                    hasConsecutiveMonths = true;
+                    break;
                 }
             }
-            
-            // Now check if the filtered transactions show a recurring pattern
-            if (filteredTxns.size() < 2) continue;
-            
-            boolean isRecurring = false;
-            int recurringCount = 0;
-            
-            for (int i = 1; i < filteredTxns.size(); i++) {
-                long daysBetween = ChronoUnit.DAYS.between(
-                    filteredTxns.get(i-1).getTransactionDate(),
-                    filteredTxns.get(i).getTransactionDate()
-                );
-                // Check for monthly pattern (20-40 days)
-                if (daysBetween >= 20 && daysBetween <= 40) {
-                    recurringCount++;
+
+            if (!hasConsecutiveMonths) {
+                log.info("Category '{}': no consecutive monthly pattern — skipping", normalizedCategory);
+                continue;
+            }
+
+            // ── Rule 3: Fixed amount (all transactions within 1% of each other) ─
+            // Real subscriptions (Netflix, Spotify, gym) charge the exact same amount.
+            // Variable spend (groceries, electricity) will fail this check.
+            BigDecimal minAmount = txns.stream().map(Transaction::getAmount).min(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
+            BigDecimal maxAmount = txns.stream().map(Transaction::getAmount).max(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
+
+            if (minAmount.compareTo(BigDecimal.ZERO) > 0) {
+                double variancePercent = maxAmount.subtract(minAmount)
+                        .divide(minAmount, 6, RoundingMode.HALF_UP)
+                        .multiply(BigDecimal.valueOf(100))
+                        .doubleValue();
+
+                if (variancePercent > AMOUNT_TOLERANCE_PERCENT) {
+                    log.info("Category '{}': amount varies {:.2f}% (min={}, max={}) — not a fixed subscription",
+                            normalizedCategory, variancePercent, minAmount, maxAmount);
+                    continue;
                 }
             }
-            
-            // Need at least 1 recurring pattern (2 transactions ~30 days apart)
-            if (recurringCount >= 1) {
-                String normalizedMerchant = entry.getKey();
-                Subscription existingSub = existingByMerchant.get(normalizedMerchant);
-                
-                if (existingSub != null) {
-                    // Update existing subscription with new data but preserve status
-                    updateSubscription(existingSub, filteredTxns);
-                    subscriptions.add(existingSub);
-                    log.info("Updated existing subscription for user {}: merchant={}, status={}", 
-                        userId, existingSub.getMerchant(), existingSub.getStatus());
-                } else {
-                    // Create new subscription
-                    Subscription sub = createSubscription(user, entry.getKey(), filteredTxns);
-                    subscriptions.add(sub);
-                    log.info("Detected new subscription for user {}: merchant={}, avgAmount={}, nextDue={}", 
-                        userId, sub.getMerchant(), sub.getAvgAmount(), sub.getNextDueDate());
-                }
+
+            log.info("Category '{}': all rules passed ✓ — detected as subscription", normalizedCategory);
+
+            // Use the single representative transaction per month for amounts
+            // (since amounts are fixed, just use the first transaction's amount)
+            BigDecimal fixedAmount = txns.get(0).getAmount();
+
+            Transaction lastTxn = txns.get(txns.size() - 1);
+            LocalDate lastPaidDate = lastTxn.getTransactionDate().toLocalDate();
+            LocalDate nextDueDate = lastPaidDate.plusDays(30);
+
+            String displayCategory = txns.get(0).getCategory();
+
+            Subscription existing = existingByCategory.get(normalizedCategory);
+            if (existing != null) {
+                existing.setAvgAmount(fixedAmount);
+                existing.setLastPaidDate(lastPaidDate);
+                existing.setNextDueDate(nextDueDate);
+                // Do NOT touch status — preserves IGNORED
+                detectedSubscriptions.add(existing);
+                log.info("Updated '{}': amount={}, nextDue={}, status={}",
+                        displayCategory, fixedAmount, nextDueDate, existing.getStatus());
+            } else {
+                Subscription sub = Subscription.builder()
+                        .user(user)
+                        .merchant(displayCategory)
+                        .avgAmount(fixedAmount)
+                        .lastPaidDate(lastPaidDate)
+                        .nextDueDate(nextDueDate)
+                        .status(SubscriptionStatus.ACTIVE)
+                        .createdAt(LocalDateTime.now())
+                        .build();
+                detectedSubscriptions.add(sub);
+                log.info("New subscription '{}': amount={}, nextDue={}", displayCategory, fixedAmount, nextDueDate);
             }
         }
-        
-        return subscriptionRepository.saveAll(subscriptions);
+
+        log.info("User {}: {} subscription(s) detected/updated", userId, detectedSubscriptions.size());
+        return subscriptionRepository.saveAll(detectedSubscriptions);
     }
-    
+
     /**
-     * Finds subscriptions due within specified days.
-     * 
-     * @param userId The user
-     * @param days Number of days to look ahead
-     * @return List of due-soon subscriptions
+     * Finds ACTIVE subscriptions due within the specified number of days.
      */
     public List<Subscription> findDueSoon(Long userId, int days) {
         User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found: " + userId));
-        
+                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+
         LocalDate start = LocalDate.now();
         LocalDate end = start.plusDays(days);
-        
+
         return subscriptionRepository.findDueSoon(user, start, end);
-    }
-    
-    /**
-     * Normalizes merchant name for matching.
-     * For categories, just use lowercase.
-     */
-    private String normalizeMerchant(String merchant) {
-        if (merchant == null) return "unknown";
-        return merchant.toLowerCase().trim();
-    }
-    
-    /**
-     * Groups transactions by category (for subscription detection).
-     */
-    private Map<String, List<Transaction>> groupByMerchant(List<Transaction> transactions) {
-        return transactions.stream()
-            .filter(t -> t.getCategory() != null)
-            .collect(Collectors.groupingBy(Transaction::getCategory));
-    }
-    
-    private Subscription createSubscription(User user, String normalizedMerchant, List<Transaction> txns) {
-        // Calculate average amount
-        BigDecimal avgAmount = txns.stream()
-            .map(Transaction::getAmount)
-            .reduce(BigDecimal.ZERO, BigDecimal::add)
-            .divide(BigDecimal.valueOf(txns.size()), 2, RoundingMode.HALF_UP);
-        
-        // Get last payment date
-        Transaction lastTxn = txns.get(txns.size() - 1);
-        LocalDate lastPaidDate = lastTxn.getTransactionDate().toLocalDate();
-        
-        // Calculate next due date (last + 30 days)
-        LocalDate nextDueDate = lastPaidDate.plusDays(30);
-        
-        return Subscription.builder()
-            .user(user)
-            .merchant(txns.get(0).getCategory()) // Use category as merchant name
-            .avgAmount(avgAmount)
-            .lastPaidDate(lastPaidDate)
-            .nextDueDate(nextDueDate)
-            .status(SubscriptionStatus.ACTIVE)
-            .createdAt(LocalDateTime.now())
-            .build();
-    }
-    
-    private void updateSubscription(Subscription subscription, List<Transaction> txns) {
-        // Calculate average amount
-        BigDecimal avgAmount = txns.stream()
-            .map(Transaction::getAmount)
-            .reduce(BigDecimal.ZERO, BigDecimal::add)
-            .divide(BigDecimal.valueOf(txns.size()), 2, RoundingMode.HALF_UP);
-        
-        // Get last payment date
-        Transaction lastTxn = txns.get(txns.size() - 1);
-        LocalDate lastPaidDate = lastTxn.getTransactionDate().toLocalDate();
-        
-        // Calculate next due date (last + 30 days)
-        LocalDate nextDueDate = lastPaidDate.plusDays(30);
-        
-        // Update fields but preserve status
-        subscription.setAvgAmount(avgAmount);
-        subscription.setLastPaidDate(lastPaidDate);
-        subscription.setNextDueDate(nextDueDate);
-        // Status is preserved - don't change it
     }
 }
