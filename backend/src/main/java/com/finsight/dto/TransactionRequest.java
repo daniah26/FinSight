@@ -18,7 +18,8 @@ public class TransactionRequest {
     private Long userId;
     
     @NotNull(message = "Amount is required")
-    @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
+    @DecimalMin(value = "0.01", message = "Amount must be at least $0.01")
+    @DecimalMax(value = "1000000.00", message = "Amount cannot exceed $1,000,000")
     private BigDecimal amount;
     
     @NotBlank(message = "Type is required")

@@ -3,8 +3,10 @@ package com.finsight.controller;
 import com.finsight.dto.SubscriptionDto;
 import com.finsight.model.Subscription;
 import com.finsight.model.SubscriptionStatus;
+import com.finsight.model.User;
 import com.finsight.repository.SubscriptionRepository;
 import com.finsight.service.SubscriptionDetectorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,38 @@ public class SubscriptionController {
             .map(this::toDto)
             .collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
+    }
+    
+    @PostMapping
+    public ResponseEntity<SubscriptionDto> createSubscription(@Valid @RequestBody SubscriptionDto dto, @RequestParam Long userId) {
+        // Additional validation for date range (25-35 days)
+        if (dto.getLastPaidDate() != null && dto.getNextDueDate() != null) {
+            long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(dto.getLastPaidDate(), dto.getNextDueDate());
+            
+            if (daysBetween < 25) {
+                throw new RuntimeException("Next due date must be at least 25 days after last paid date");
+            }
+            if (daysBetween > 35) {
+                throw new RuntimeException("Next due date must be at most 35 days after last paid date");
+            }
+        }
+        
+        // Manually create a subscription
+        User user = new User();
+        user.setId(userId);
+        
+        Subscription subscription = Subscription.builder()
+            .user(user)
+            .merchant(dto.getMerchant())
+            .avgAmount(dto.getAvgAmount())
+            .lastPaidDate(dto.getLastPaidDate())
+            .nextDueDate(dto.getNextDueDate())
+            .status(SubscriptionStatus.ACTIVE)
+            .createdAt(java.time.LocalDateTime.now())
+            .build();
+        
+        subscription = subscriptionRepository.save(subscription);
+        return ResponseEntity.ok(toDto(subscription));
     }
     
     @GetMapping("/due-soon")

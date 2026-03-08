@@ -171,6 +171,12 @@ public class DemoDataService {
                     .withHour(hour)
                     .withMinute(minute);
 
+                // Skip transactions that would be in the future
+                if (txnDate.isAfter(now)) {
+                    log.debug("Skipping future transaction date: {}", txnDate);
+                    continue;
+                }
+
                 Transaction txn = Transaction.builder()
                     .user(user)
                     .createdAt(txnDate)
