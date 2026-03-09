@@ -30,7 +30,7 @@ class FraudDetectionServicePropertyTest {
         // Setup mocks
         when(repo.calculateAverageAmount(any())).thenReturn(BigDecimal.valueOf(100));
         when(repo.countByUserAndTransactionDateBetween(any(), any(), any())).thenReturn(0L);
-        when(repo.findTopByUserOrderByTransactionDateDesc(any())).thenReturn(Optional.empty());
+        when(repo.findByUserOrderByTransactionDateDesc(any())).thenReturn(List.of());
         when(repo.findDistinctCategoriesByUser(any())).thenReturn(List.of("groceries"));
         
         FraudDetectionResult result = service.analyzeTransaction(transaction);
@@ -77,7 +77,7 @@ class FraudDetectionServicePropertyTest {
         // Setup mocks with fixed values
         when(repo.calculateAverageAmount(any())).thenReturn(BigDecimal.valueOf(100));
         when(repo.countByUserAndTransactionDateBetween(any(), any(), any())).thenReturn(0L);
-        when(repo.findTopByUserOrderByTransactionDateDesc(any())).thenReturn(Optional.empty());
+        when(repo.findByUserOrderByTransactionDateDesc(any())).thenReturn(List.of());
         when(repo.findDistinctCategoriesByUser(any())).thenReturn(List.of("groceries"));
         
         FraudDetectionResult result1 = service.analyzeTransaction(transaction);

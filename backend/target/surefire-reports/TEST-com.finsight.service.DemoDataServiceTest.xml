@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.finsight.service.DemoDataServiceTest" time="4.51" tests="10" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="18"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\97333\FinSight\backend\target\test-classes;C:\Users\97333\FinSight\backend\target\classes;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.0\spring-boot-starter-web-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.0\spring-boot-starter-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot\3.2.0\spring-boot-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.0\spring-boot-autoconfigure-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.0\spring-boot-starter-logging-3.2.0.jar;C:\Users\97333\.m2\repository\ch\qos\logback\logback-classic\1.4.11\logback-classic-1.4.11.jar;C:\Users\97333\.m2\repository\ch\qos\logback\logback-core\1.4.11\logback-core-1.4.11.jar;C:\Users\97333\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\97333\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\97333\.m2\repository\org\slf4j\jul-to-slf4j\2.0.9\jul-to-slf4j-2.0.9.jar;C:\Users\97333\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\97333\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.0\spring-boot-starter-json-3.2.0.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.3\jackson-datatype-jdk8-2.15.3.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.3\jackson-datatype-jsr310-2.15.3.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.3\jackson-module-parameter-names-2.15.3.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.0\spring-boot-starter-tomcat-3.2.0.jar;C:\Users\97333\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.16\tomcat-embed-core-10.1.16.jar;C:\Users\97333\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.16\tomcat-embed-websocket-10.1.16.jar;C:\Users\97333\.m2\repository\org\springframework\spring-web\6.1.1\spring-web-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-beans\6.1.1\spring-beans-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-webmvc\6.1.1\spring-webmvc-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-context\6.1.1\spring-context-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-expression\6.1.1\spring-expression-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.0\spring-boot-starter-data-jpa-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.0\spring-boot-starter-aop-3.2.0.jar;C:\Users\97333\.m2\repository\org\aspectj\aspectjweaver\1.9.20.1\aspectjweaver-1.9.20.1.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.0\spring-boot-starter-jdbc-3.2.0.jar;C:\Users\97333\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-jdbc\6.1.1\spring-jdbc-6.1.1.jar;C:\Users\97333\.m2\repository\org\hibernate\orm\hibernate-core\6.3.1.Final\hibernate-core-6.3.1.Final.jar;C:\Users\97333\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\97333\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\97333\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\97333\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\97333\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\97333\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\97333\.m2\repository\net\bytebuddy\byte-buddy\1.14.10\byte-buddy-1.14.10.jar;C:\Users\97333\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\97333\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\97333\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\97333\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\97333\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\97333\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\97333\.m2\repository\org\antlr\antlr4-runtime\4.10.1\antlr4-runtime-4.10.1.jar;C:\Users\97333\.m2\repository\org\springframework\data\spring-data-jpa\3.2.0\spring-data-jpa-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\data\spring-data-commons\3.2.0\spring-data-commons-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\spring-orm\6.1.1\spring-orm-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-tx\6.1.1\spring-tx-6.1.1.jar;C:\Users\97333\.m2\repository\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar;C:\Users\97333\.m2\repository\org\springframework\spring-aspects\6.1.1\spring-aspects-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.0\spring-boot-starter-validation-3.2.0.jar;C:\Users\97333\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.16\tomcat-embed-el-10.1.16.jar;C:\Users\97333\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\97333\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.0\spring-boot-starter-security-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\spring-aop\6.1.1\spring-aop-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-config\6.2.0\spring-security-config-6.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-web\6.2.0\spring-security-web-6.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.0\spring-boot-starter-actuator-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.0\spring-boot-actuator-autoconfigure-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.0\spring-boot-actuator-3.2.0.jar;C:\Users\97333\.m2\repository\io\micrometer\micrometer-observation\1.12.0\micrometer-observation-1.12.0.jar;C:\Users\97333\.m2\repository\io\micrometer\micrometer-commons\1.12.0\micrometer-commons-1.12.0.jar;C:\Users\97333\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.0\micrometer-jakarta9-1.12.0.jar;C:\Users\97333\.m2\repository\io\micrometer\micrometer-core\1.12.0\micrometer-core-1.12.0.jar;C:\Users\97333\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\97333\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\97333\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\97333\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\97333\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\97333\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.3\jackson-databind-2.15.3.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.3\jackson-annotations-2.15.3.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.3\jackson-core-2.15.3.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-crypto\6.2.0\spring-security-crypto-6.2.0.jar;C:\Users\97333\.m2\repository\org\projectlombok\lombok\1.18.36\lombok-1.18.36.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.0\spring-boot-starter-test-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-test\3.2.0\spring-boot-test-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.0\spring-boot-test-autoconfigure-3.2.0.jar;C:\Users\97333\.m2\repository\com\jayway\jsonpath\json-path\2.8.0\json-path-2.8.0.jar;C:\Users\97333\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\97333\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\97333\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\97333\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\97333\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\97333\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\97333\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\97333\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\97333\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.1\junit-jupiter-5.10.1.jar;C:\Users\97333\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;C:\Users\97333\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.1\junit-jupiter-params-5.10.1.jar;C:\Users\97333\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;C:\Users\97333\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\97333\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.10\byte-buddy-agent-1.14.10.jar;C:\Users\97333\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\97333\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\97333\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\97333\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-core\6.1.1\spring-core-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-jcl\6.1.1\spring-jcl-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-test\6.1.1\spring-test-6.1.1.jar;C:\Users\97333\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-test\6.2.0\spring-security-test-6.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-core\6.2.0\spring-security-core-6.2.0.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik\1.7.4\jqwik-1.7.4.jar;C:\Users\97333\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik-api\1.7.4\jqwik-api-1.7.4.jar;C:\Users\97333\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\97333\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik-web\1.7.4\jqwik-web-1.7.4.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik-time\1.7.4\jqwik-time-1.7.4.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik-engine\1.7.4\jqwik-engine-1.7.4.jar;C:\Users\97333\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Asia/Bahrain"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="18"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-18.0.2.1\bin"/>
+    <property name="sun.java.command" value="C:\Users\97333\AppData\Local\Temp\surefire12930487744979556536\surefirebooter-20260309164334588_3.jar C:\Users\97333\AppData\Local\Temp\surefire12930487744979556536 2026-03-09T16-43-34_277-jvmRun1 surefire-20260309164334588_1tmp surefire_0-20260309164334588_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="C:\Users\97333\FinSight\backend\target\test-classes;C:\Users\97333\FinSight\backend\target\classes;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.0\spring-boot-starter-web-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.0\spring-boot-starter-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot\3.2.0\spring-boot-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.0\spring-boot-autoconfigure-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.0\spring-boot-starter-logging-3.2.0.jar;C:\Users\97333\.m2\repository\ch\qos\logback\logback-classic\1.4.11\logback-classic-1.4.11.jar;C:\Users\97333\.m2\repository\ch\qos\logback\logback-core\1.4.11\logback-core-1.4.11.jar;C:\Users\97333\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\97333\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\97333\.m2\repository\org\slf4j\jul-to-slf4j\2.0.9\jul-to-slf4j-2.0.9.jar;C:\Users\97333\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\97333\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.0\spring-boot-starter-json-3.2.0.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.3\jackson-datatype-jdk8-2.15.3.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.3\jackson-datatype-jsr310-2.15.3.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.3\jackson-module-parameter-names-2.15.3.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.0\spring-boot-starter-tomcat-3.2.0.jar;C:\Users\97333\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.16\tomcat-embed-core-10.1.16.jar;C:\Users\97333\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.16\tomcat-embed-websocket-10.1.16.jar;C:\Users\97333\.m2\repository\org\springframework\spring-web\6.1.1\spring-web-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-beans\6.1.1\spring-beans-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-webmvc\6.1.1\spring-webmvc-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-context\6.1.1\spring-context-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-expression\6.1.1\spring-expression-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.0\spring-boot-starter-data-jpa-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.0\spring-boot-starter-aop-3.2.0.jar;C:\Users\97333\.m2\repository\org\aspectj\aspectjweaver\1.9.20.1\aspectjweaver-1.9.20.1.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.0\spring-boot-starter-jdbc-3.2.0.jar;C:\Users\97333\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-jdbc\6.1.1\spring-jdbc-6.1.1.jar;C:\Users\97333\.m2\repository\org\hibernate\orm\hibernate-core\6.3.1.Final\hibernate-core-6.3.1.Final.jar;C:\Users\97333\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\97333\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\97333\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\97333\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\97333\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\97333\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\97333\.m2\repository\net\bytebuddy\byte-buddy\1.14.10\byte-buddy-1.14.10.jar;C:\Users\97333\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\97333\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\97333\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\97333\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\97333\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\97333\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\97333\.m2\repository\org\antlr\antlr4-runtime\4.10.1\antlr4-runtime-4.10.1.jar;C:\Users\97333\.m2\repository\org\springframework\data\spring-data-jpa\3.2.0\spring-data-jpa-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\data\spring-data-commons\3.2.0\spring-data-commons-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\spring-orm\6.1.1\spring-orm-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-tx\6.1.1\spring-tx-6.1.1.jar;C:\Users\97333\.m2\repository\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar;C:\Users\97333\.m2\repository\org\springframework\spring-aspects\6.1.1\spring-aspects-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.0\spring-boot-starter-validation-3.2.0.jar;C:\Users\97333\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.16\tomcat-embed-el-10.1.16.jar;C:\Users\97333\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\97333\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.0\spring-boot-starter-security-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\spring-aop\6.1.1\spring-aop-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-config\6.2.0\spring-security-config-6.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-web\6.2.0\spring-security-web-6.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.0\spring-boot-starter-actuator-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.0\spring-boot-actuator-autoconfigure-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.0\spring-boot-actuator-3.2.0.jar;C:\Users\97333\.m2\repository\io\micrometer\micrometer-observation\1.12.0\micrometer-observation-1.12.0.jar;C:\Users\97333\.m2\repository\io\micrometer\micrometer-commons\1.12.0\micrometer-commons-1.12.0.jar;C:\Users\97333\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.0\micrometer-jakarta9-1.12.0.jar;C:\Users\97333\.m2\repository\io\micrometer\micrometer-core\1.12.0\micrometer-core-1.12.0.jar;C:\Users\97333\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\97333\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\97333\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\97333\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\97333\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\97333\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.3\jackson-databind-2.15.3.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.3\jackson-annotations-2.15.3.jar;C:\Users\97333\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.3\jackson-core-2.15.3.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-crypto\6.2.0\spring-security-crypto-6.2.0.jar;C:\Users\97333\.m2\repository\org\projectlombok\lombok\1.18.36\lombok-1.18.36.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.0\spring-boot-starter-test-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-test\3.2.0\spring-boot-test-3.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.0\spring-boot-test-autoconfigure-3.2.0.jar;C:\Users\97333\.m2\repository\com\jayway\jsonpath\json-path\2.8.0\json-path-2.8.0.jar;C:\Users\97333\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\97333\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\97333\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\97333\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\97333\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\97333\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\97333\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\97333\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\97333\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.1\junit-jupiter-5.10.1.jar;C:\Users\97333\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;C:\Users\97333\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.1\junit-jupiter-params-5.10.1.jar;C:\Users\97333\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;C:\Users\97333\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\97333\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.10\byte-buddy-agent-1.14.10.jar;C:\Users\97333\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\97333\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\97333\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\97333\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-core\6.1.1\spring-core-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-jcl\6.1.1\spring-jcl-6.1.1.jar;C:\Users\97333\.m2\repository\org\springframework\spring-test\6.1.1\spring-test-6.1.1.jar;C:\Users\97333\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-test\6.2.0\spring-security-test-6.2.0.jar;C:\Users\97333\.m2\repository\org\springframework\security\spring-security-core\6.2.0\spring-security-core-6.2.0.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik\1.7.4\jqwik-1.7.4.jar;C:\Users\97333\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik-api\1.7.4\jqwik-api-1.7.4.jar;C:\Users\97333\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\97333\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik-web\1.7.4\jqwik-web-1.7.4.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik-time\1.7.4\jqwik-time-1.7.4.jar;C:\Users\97333\.m2\repository\net\jqwik\jqwik-engine\1.7.4\jqwik-engine-1.7.4.jar;C:\Users\97333\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\97333"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2022-08-18"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-18.0.2.1"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\97333\FinSight\backend"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\97333\AppData\Local\Temp\surefire12930487744979556536\surefirebooter-20260309164334588_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="18.0.2.1+1-1"/>
+    <property name="user.name" value="97333"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\97333\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\97333\AppData\Local\Temp\"/>
+    <property name="java.version" value="18.0.2.1"/>
+    <property name="user.dir" value="C:\Users\97333\FinSight\backend"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-18.0.2.1\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Users\97333\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\97333\bin;C:\Program Files\Microsoft MPI\Bin;C:\Program Files (x86)\VMware\VMware Workstation\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\sqlite;C:\msys64\mingw64\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit;C:\Program Files\Sublime Text;C:\Users\97333\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Go\bin;C:\Program Files\nodejs;C:\Users\97333\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2021.2.1\bin;C:\Users\97333\.dotnet\tools;C:\Users\97333\AppData\Local\Programs\MiKTeX\miktex\bin\x64;C:\Program Files (x86)\Nmap;C:\flutter\bin;C:\flutter_windows_3.24.3-stable\flutter\bin;C:\Users\97333\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\97333\go\bin;C:\Users\97333\AppData\Roaming\npm;C:\Users\97333\AppData\Local\Programs\Zed\bin;C:\Users\97333\AppData\Local\Programs\Kiro\bin;C:\Users\97333\.kiro\extensions\vscjava.vscode-java-debug-0.58.5\bundled\scripts\noConfigScripts;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;C:\Program Files\apache-maven-3.9.13\bin;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="18.0.2.1+1-1"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="62.0"/>
+  </properties>
+  <testcase name="transactions_HaveValidAmounts" classname="com.finsight.service.DemoDataServiceTest" time="3.719">
+    <system-out><![CDATA[16:43:39.983 [main] INFO com.finsight.service.DemoDataService -- Starting demo transaction generation. Current date: 2026-03-09T16:43:39.978934600
+16:43:40.002 [main] INFO com.finsight.service.DemoDataService -- Generating 12 transactions for month: APRIL 2025
+16:43:40.008 [main] INFO com.finsight.service.DemoDataService --   First transaction date: APRIL 2025
+16:43:40.009 [main] INFO com.finsight.service.DemoDataService -- Generating 14 transactions for month: MAY 2025
+16:43:40.009 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MAY 2025
+16:43:40.009 [main] INFO com.finsight.service.DemoDataService -- Generating 15 transactions for month: JUNE 2025
+16:43:40.010 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JUNE 2025
+16:43:40.010 [main] INFO com.finsight.service.DemoDataService -- Generating 16 transactions for month: JULY 2025
+16:43:40.010 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JULY 2025
+16:43:40.010 [main] INFO com.finsight.service.DemoDataService -- Generating 18 transactions for month: AUGUST 2025
+16:43:40.010 [main] INFO com.finsight.service.DemoDataService --   First transaction date: AUGUST 2025
+16:43:40.011 [main] INFO com.finsight.service.DemoDataService -- Generating 20 transactions for month: SEPTEMBER 2025
+16:43:40.011 [main] INFO com.finsight.service.DemoDataService --   First transaction date: SEPTEMBER 2025
+16:43:40.011 [main] INFO com.finsight.service.DemoDataService -- Generating 22 transactions for month: OCTOBER 2025
+16:43:40.011 [main] INFO com.finsight.service.DemoDataService --   First transaction date: OCTOBER 2025
+16:43:40.012 [main] INFO com.finsight.service.DemoDataService -- Generating 24 transactions for month: NOVEMBER 2025
+16:43:40.012 [main] INFO com.finsight.service.DemoDataService --   First transaction date: NOVEMBER 2025
+16:43:40.013 [main] INFO com.finsight.service.DemoDataService -- Generating 25 transactions for month: DECEMBER 2025
+16:43:40.013 [main] INFO com.finsight.service.DemoDataService --   First transaction date: DECEMBER 2025
+16:43:40.013 [main] INFO com.finsight.service.DemoDataService -- Generating 26 transactions for month: JANUARY 2026
+16:43:40.013 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JANUARY 2026
+16:43:40.014 [main] INFO com.finsight.service.DemoDataService -- Generating 28 transactions for month: FEBRUARY 2026
+16:43:40.014 [main] INFO com.finsight.service.DemoDataService --   First transaction date: FEBRUARY 2026
+16:43:40.015 [main] INFO com.finsight.service.DemoDataService -- Generating 30 transactions for month: MARCH 2026
+16:43:40.015 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MARCH 2026
+16:43:40.015 [main] INFO com.finsight.service.DemoDataService -- Generated 227 total transactions across 12 months
+16:43:40.123 [main] INFO com.finsight.service.DemoDataService -- Generated 227 demo transactions (0 fraud alerts) for user 1
+]]></system-out>
+  </testcase>
+  <testcase name="demoTransactions_SpanMultipleMonths" classname="com.finsight.service.DemoDataServiceTest" time="0.085">
+    <system-out><![CDATA[16:43:40.355 [main] INFO com.finsight.service.DemoDataService -- Starting demo transaction generation. Current date: 2026-03-09T16:43:40.355344700
+16:43:40.355 [main] INFO com.finsight.service.DemoDataService -- Generating 12 transactions for month: APRIL 2025
+16:43:40.355 [main] INFO com.finsight.service.DemoDataService --   First transaction date: APRIL 2025
+16:43:40.355 [main] INFO com.finsight.service.DemoDataService -- Generating 14 transactions for month: MAY 2025
+16:43:40.356 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MAY 2025
+16:43:40.356 [main] INFO com.finsight.service.DemoDataService -- Generating 15 transactions for month: JUNE 2025
+16:43:40.356 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JUNE 2025
+16:43:40.356 [main] INFO com.finsight.service.DemoDataService -- Generating 16 transactions for month: JULY 2025
+16:43:40.356 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JULY 2025
+16:43:40.357 [main] INFO com.finsight.service.DemoDataService -- Generating 18 transactions for month: AUGUST 2025
+16:43:40.357 [main] INFO com.finsight.service.DemoDataService --   First transaction date: AUGUST 2025
+16:43:40.357 [main] INFO com.finsight.service.DemoDataService -- Generating 20 transactions for month: SEPTEMBER 2025
+16:43:40.357 [main] INFO com.finsight.service.DemoDataService --   First transaction date: SEPTEMBER 2025
+16:43:40.357 [main] INFO com.finsight.service.DemoDataService -- Generating 22 transactions for month: OCTOBER 2025
+16:43:40.357 [main] INFO com.finsight.service.DemoDataService --   First transaction date: OCTOBER 2025
+16:43:40.358 [main] INFO com.finsight.service.DemoDataService -- Generating 24 transactions for month: NOVEMBER 2025
+16:43:40.358 [main] INFO com.finsight.service.DemoDataService --   First transaction date: NOVEMBER 2025
+16:43:40.358 [main] INFO com.finsight.service.DemoDataService -- Generating 25 transactions for month: DECEMBER 2025
+16:43:40.359 [main] INFO com.finsight.service.DemoDataService --   First transaction date: DECEMBER 2025
+16:43:40.359 [main] INFO com.finsight.service.DemoDataService -- Generating 26 transactions for month: JANUARY 2026
+16:43:40.359 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JANUARY 2026
+16:43:40.359 [main] INFO com.finsight.service.DemoDataService -- Generating 28 transactions for month: FEBRUARY 2026
+16:43:40.360 [main] INFO com.finsight.service.DemoDataService --   First transaction date: FEBRUARY 2026
+16:43:40.360 [main] INFO com.finsight.service.DemoDataService -- Generating 30 transactions for month: MARCH 2026
+16:43:40.360 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MARCH 2026
+16:43:40.360 [main] INFO com.finsight.service.DemoDataService -- Generated 227 total transactions across 12 months
+16:43:40.411 [main] INFO com.finsight.service.DemoDataService -- Generated 227 demo transactions (0 fraud alerts) for user 1
+]]></system-out>
+  </testcase>
+  <testcase name="forceReseedUser_DeletesAndCreatesNew" classname="com.finsight.service.DemoDataServiceTest" time="0.088">
+    <system-out><![CDATA[16:43:40.445 [main] INFO com.finsight.service.DemoDataService -- Deleted 1 existing fraud alerts for user 1
+16:43:40.445 [main] INFO com.finsight.service.DemoDataService -- Deleted 1 existing transactions for user 1
+16:43:40.446 [main] INFO com.finsight.service.DemoDataService -- Starting demo transaction generation. Current date: 2026-03-09T16:43:40.446801500
+16:43:40.446 [main] INFO com.finsight.service.DemoDataService -- Generating 12 transactions for month: APRIL 2025
+16:43:40.446 [main] INFO com.finsight.service.DemoDataService --   First transaction date: APRIL 2025
+16:43:40.447 [main] INFO com.finsight.service.DemoDataService -- Generating 14 transactions for month: MAY 2025
+16:43:40.447 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MAY 2025
+16:43:40.447 [main] INFO com.finsight.service.DemoDataService -- Generating 15 transactions for month: JUNE 2025
+16:43:40.447 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JUNE 2025
+16:43:40.448 [main] INFO com.finsight.service.DemoDataService -- Generating 16 transactions for month: JULY 2025
+16:43:40.448 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JULY 2025
+16:43:40.448 [main] INFO com.finsight.service.DemoDataService -- Generating 18 transactions for month: AUGUST 2025
+16:43:40.449 [main] INFO com.finsight.service.DemoDataService --   First transaction date: AUGUST 2025
+16:43:40.449 [main] INFO com.finsight.service.DemoDataService -- Generating 20 transactions for month: SEPTEMBER 2025
+16:43:40.451 [main] INFO com.finsight.service.DemoDataService --   First transaction date: SEPTEMBER 2025
+16:43:40.452 [main] INFO com.finsight.service.DemoDataService -- Generating 22 transactions for month: OCTOBER 2025
+16:43:40.453 [main] INFO com.finsight.service.DemoDataService --   First transaction date: OCTOBER 2025
+16:43:40.453 [main] INFO com.finsight.service.DemoDataService -- Generating 24 transactions for month: NOVEMBER 2025
+16:43:40.454 [main] INFO com.finsight.service.DemoDataService --   First transaction date: NOVEMBER 2025
+16:43:40.454 [main] INFO com.finsight.service.DemoDataService -- Generating 25 transactions for month: DECEMBER 2025
+16:43:40.454 [main] INFO com.finsight.service.DemoDataService --   First transaction date: DECEMBER 2025
+16:43:40.455 [main] INFO com.finsight.service.DemoDataService -- Generating 26 transactions for month: JANUARY 2026
+16:43:40.455 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JANUARY 2026
+16:43:40.455 [main] INFO com.finsight.service.DemoDataService -- Generating 28 transactions for month: FEBRUARY 2026
+16:43:40.455 [main] INFO com.finsight.service.DemoDataService --   First transaction date: FEBRUARY 2026
+16:43:40.455 [main] INFO com.finsight.service.DemoDataService -- Generating 30 transactions for month: MARCH 2026
+16:43:40.456 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MARCH 2026
+16:43:40.456 [main] INFO com.finsight.service.DemoDataService -- Generated 227 total transactions across 12 months
+16:43:40.480 [main] INFO com.finsight.service.DemoDataService -- Generated 227 demo transactions (0 fraud alerts) for user 1
+]]></system-out>
+  </testcase>
+  <testcase name="seedUserIfEmpty_NoExistingTransactions_CreatesTransactions" classname="com.finsight.service.DemoDataServiceTest" time="0.049">
+    <system-out><![CDATA[16:43:40.535 [main] INFO com.finsight.service.DemoDataService -- Starting demo transaction generation. Current date: 2026-03-09T16:43:40.535818600
+16:43:40.535 [main] INFO com.finsight.service.DemoDataService -- Generating 12 transactions for month: APRIL 2025
+16:43:40.535 [main] INFO com.finsight.service.DemoDataService --   First transaction date: APRIL 2025
+16:43:40.535 [main] INFO com.finsight.service.DemoDataService -- Generating 14 transactions for month: MAY 2025
+16:43:40.535 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MAY 2025
+16:43:40.536 [main] INFO com.finsight.service.DemoDataService -- Generating 15 transactions for month: JUNE 2025
+16:43:40.536 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JUNE 2025
+16:43:40.536 [main] INFO com.finsight.service.DemoDataService -- Generating 16 transactions for month: JULY 2025
+16:43:40.536 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JULY 2025
+16:43:40.536 [main] INFO com.finsight.service.DemoDataService -- Generating 18 transactions for month: AUGUST 2025
+16:43:40.536 [main] INFO com.finsight.service.DemoDataService --   First transaction date: AUGUST 2025
+16:43:40.537 [main] INFO com.finsight.service.DemoDataService -- Generating 20 transactions for month: SEPTEMBER 2025
+16:43:40.537 [main] INFO com.finsight.service.DemoDataService --   First transaction date: SEPTEMBER 2025
+16:43:40.537 [main] INFO com.finsight.service.DemoDataService -- Generating 22 transactions for month: OCTOBER 2025
+16:43:40.537 [main] INFO com.finsight.service.DemoDataService --   First transaction date: OCTOBER 2025
+16:43:40.537 [main] INFO com.finsight.service.DemoDataService -- Generating 24 transactions for month: NOVEMBER 2025
+16:43:40.538 [main] INFO com.finsight.service.DemoDataService --   First transaction date: NOVEMBER 2025
+16:43:40.538 [main] INFO com.finsight.service.DemoDataService -- Generating 25 transactions for month: DECEMBER 2025
+16:43:40.538 [main] INFO com.finsight.service.DemoDataService --   First transaction date: DECEMBER 2025
+16:43:40.538 [main] INFO com.finsight.service.DemoDataService -- Generating 26 transactions for month: JANUARY 2026
+16:43:40.538 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JANUARY 2026
+16:43:40.538 [main] INFO com.finsight.service.DemoDataService -- Generating 28 transactions for month: FEBRUARY 2026
+16:43:40.539 [main] INFO com.finsight.service.DemoDataService --   First transaction date: FEBRUARY 2026
+16:43:40.539 [main] INFO com.finsight.service.DemoDataService -- Generating 30 transactions for month: MARCH 2026
+16:43:40.539 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MARCH 2026
+16:43:40.539 [main] INFO com.finsight.service.DemoDataService -- Generated 227 total transactions across 12 months
+16:43:40.565 [main] INFO com.finsight.service.DemoDataService -- Generated 227 demo transactions (0 fraud alerts) for user 1
+]]></system-out>
+  </testcase>
+  <testcase name="seedUserIfEmpty_ExistingTransactions_SkipsSeeding" classname="com.finsight.service.DemoDataServiceTest" time="0.031">
+    <system-out><![CDATA[16:43:40.607 [main] INFO com.finsight.service.DemoDataService -- User 1 already has 10 transactions, skipping demo data seeding
+]]></system-out>
+  </testcase>
+  <testcase name="fraudAlerts_CreatedForFraudulentTransactions" classname="com.finsight.service.DemoDataServiceTest" time="0.191">
+    <system-out><![CDATA[16:43:40.627 [main] INFO com.finsight.service.DemoDataService -- Starting demo transaction generation. Current date: 2026-03-09T16:43:40.627431800
+16:43:40.627 [main] INFO com.finsight.service.DemoDataService -- Generating 12 transactions for month: APRIL 2025
+16:43:40.627 [main] INFO com.finsight.service.DemoDataService --   First transaction date: APRIL 2025
+16:43:40.627 [main] INFO com.finsight.service.DemoDataService -- Generating 14 transactions for month: MAY 2025
+16:43:40.628 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MAY 2025
+16:43:40.628 [main] INFO com.finsight.service.DemoDataService -- Generating 15 transactions for month: JUNE 2025
+16:43:40.628 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JUNE 2025
+16:43:40.628 [main] INFO com.finsight.service.DemoDataService -- Generating 16 transactions for month: JULY 2025
+16:43:40.628 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JULY 2025
+16:43:40.629 [main] INFO com.finsight.service.DemoDataService -- Generating 18 transactions for month: AUGUST 2025
+16:43:40.629 [main] INFO com.finsight.service.DemoDataService --   First transaction date: AUGUST 2025
+16:43:40.629 [main] INFO com.finsight.service.DemoDataService -- Generating 20 transactions for month: SEPTEMBER 2025
+16:43:40.629 [main] INFO com.finsight.service.DemoDataService --   First transaction date: SEPTEMBER 2025
+16:43:40.629 [main] INFO com.finsight.service.DemoDataService -- Generating 22 transactions for month: OCTOBER 2025
+16:43:40.630 [main] INFO com.finsight.service.DemoDataService --   First transaction date: OCTOBER 2025
+16:43:40.630 [main] INFO com.finsight.service.DemoDataService -- Generating 24 transactions for month: NOVEMBER 2025
+16:43:40.632 [main] INFO com.finsight.service.DemoDataService --   First transaction date: NOVEMBER 2025
+16:43:40.634 [main] INFO com.finsight.service.DemoDataService -- Generating 25 transactions for month: DECEMBER 2025
+16:43:40.635 [main] INFO com.finsight.service.DemoDataService --   First transaction date: DECEMBER 2025
+16:43:40.636 [main] INFO com.finsight.service.DemoDataService -- Generating 26 transactions for month: JANUARY 2026
+16:43:40.636 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JANUARY 2026
+16:43:40.636 [main] INFO com.finsight.service.DemoDataService -- Generating 28 transactions for month: FEBRUARY 2026
+16:43:40.637 [main] INFO com.finsight.service.DemoDataService --   First transaction date: FEBRUARY 2026
+16:43:40.637 [main] INFO com.finsight.service.DemoDataService -- Generating 30 transactions for month: MARCH 2026
+16:43:40.637 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MARCH 2026
+16:43:40.637 [main] INFO com.finsight.service.DemoDataService -- Generated 227 total transactions across 12 months
+16:43:40.638 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.639 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.640 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.640 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.640 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.640 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.641 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.641 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.642 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.642 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.642 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.643 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.643 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.643 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.643 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.644 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.645 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.649 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.649 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.650 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.652 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.652 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.653 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.653 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.654 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.654 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.654 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.654 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.654 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.656 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.656 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.656 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.657 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.657 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.657 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.658 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.658 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.658 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.658 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.658 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.659 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.659 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.659 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.659 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.659 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.660 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.660 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.660 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.660 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.660 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.662 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.663 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.663 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.663 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.663 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.664 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.664 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.664 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.665 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.665 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.666 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.666 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.668 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.668 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.669 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.669 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.669 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.669 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.670 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.670 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.670 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.670 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.670 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.670 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.671 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.671 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.671 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.671 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.672 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.672 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.672 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.672 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.673 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.673 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.673 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.673 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.674 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.674 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.674 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.674 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.675 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.675 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.675 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.675 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.676 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.676 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.676 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.676 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.677 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.677 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.677 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.677 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.678 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.678 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.678 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.678 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.679 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.679 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.679 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.679 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.679 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.679 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.680 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.680 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.680 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.680 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.681 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.681 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.682 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.682 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.683 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.683 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.683 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.683 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.684 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.684 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.684 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.684 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.685 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.685 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.685 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.685 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.685 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.686 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.686 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.686 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.686 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.686 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.686 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.686 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.687 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.687 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.687 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.687 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.687 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.687 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.688 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.688 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.688 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.688 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.688 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.688 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.689 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.689 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.689 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.689 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.690 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.690 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.690 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.690 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.690 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.691 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.691 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.691 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.691 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.692 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.692 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.692 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.692 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.692 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.693 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.693 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.693 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.693 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.693 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.693 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.694 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.694 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.694 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.694 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.694 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.694 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.695 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.695 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.695 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.695 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.696 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.696 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.696 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.696 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.697 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.698 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.699 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.700 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.700 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.700 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.701 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.701 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.701 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.701 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.701 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.701 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.702 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.702 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.702 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.702 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.702 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.702 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.703 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.703 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.703 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.703 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.704 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.704 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.704 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.704 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.704 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.704 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.705 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.705 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.705 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.705 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.705 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.705 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.706 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.706 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.706 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.706 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.706 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.706 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.707 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.707 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.707 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.707 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.708 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.708 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.708 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.708 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.709 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.709 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.709 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.709 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.709 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.710 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.710 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.710 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.710 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.710 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.711 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.711 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.711 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.711 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.711 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.711 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.712 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.712 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.712 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.712 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.713 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.713 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.713 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.713 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.714 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.714 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.715 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.715 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.715 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.715 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.715 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.716 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.716 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.716 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.716 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.716 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.717 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.717 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.717 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.717 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.718 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.718 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.718 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.718 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.718 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.718 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.719 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.719 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.719 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.719 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.719 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.720 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.720 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.720 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.720 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.720 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.720 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.720 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.721 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.721 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.721 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.721 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.722 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.722 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.722 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.722 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.723 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.723 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.724 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.724 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.725 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.725 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.725 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.725 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.726 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.726 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.727 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.727 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.728 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.728 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.729 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.729 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.731 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.731 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.731 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.731 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.732 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.732 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.732 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.732 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.733 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.735 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.737 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.737 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.738 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.738 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.739 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.739 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.746 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.747 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.751 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.752 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.754 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.755 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.756 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.756 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.757 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.757 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.758 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.758 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.759 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.759 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.760 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.760 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.760 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.762 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.763 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.763 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.764 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.764 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.765 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.765 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.765 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.765 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.766 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.774 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.776 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.776 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.777 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.777 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.777 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.778 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.778 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.778 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.778 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.778 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.778 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.779 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.779 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.779 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.779 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.779 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.779 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.779 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.780 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.780 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.780 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.780 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.781 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.781 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.781 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.781 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.783 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.783 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.784 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.784 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.784 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.784 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.784 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.785 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.785 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.785 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.785 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.787 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.788 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.788 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.788 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.788 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.789 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.789 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.789 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.789 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.789 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.789 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.790 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.790 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.790 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.790 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.790 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.790 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.791 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.791 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.791 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.791 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.792 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.792 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.792 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.792 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.792 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.792 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.793 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.793 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.793 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.793 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.793 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.793 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.794 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.794 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.794 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.794 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.795 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.795 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.795 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.795 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.795 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.795 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.796 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.796 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.796 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.796 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.796 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.797 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.797 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.797 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.799 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 1 with severity HIGH
+16:43:40.800 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 1 with score 85.0 (HIGH)
+16:43:40.800 [main] INFO com.finsight.service.DemoDataService -- Generated 227 demo transactions (227 fraud alerts) for user 1
+]]></system-out>
+  </testcase>
+  <testcase name="generation_IsDeterministic" classname="com.finsight.service.DemoDataServiceTest" time="0.108">
+    <system-out><![CDATA[16:43:40.835 [main] INFO com.finsight.service.DemoDataService -- Starting demo transaction generation. Current date: 2026-03-09T16:43:40.835537900
+16:43:40.835 [main] INFO com.finsight.service.DemoDataService -- Generating 12 transactions for month: APRIL 2025
+16:43:40.836 [main] INFO com.finsight.service.DemoDataService --   First transaction date: APRIL 2025
+16:43:40.837 [main] INFO com.finsight.service.DemoDataService -- Generating 14 transactions for month: MAY 2025
+16:43:40.837 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MAY 2025
+16:43:40.837 [main] INFO com.finsight.service.DemoDataService -- Generating 15 transactions for month: JUNE 2025
+16:43:40.837 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JUNE 2025
+16:43:40.837 [main] INFO com.finsight.service.DemoDataService -- Generating 16 transactions for month: JULY 2025
+16:43:40.837 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JULY 2025
+16:43:40.837 [main] INFO com.finsight.service.DemoDataService -- Generating 18 transactions for month: AUGUST 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService --   First transaction date: AUGUST 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService -- Generating 20 transactions for month: SEPTEMBER 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService --   First transaction date: SEPTEMBER 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService -- Generating 22 transactions for month: OCTOBER 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService --   First transaction date: OCTOBER 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService -- Generating 24 transactions for month: NOVEMBER 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService --   First transaction date: NOVEMBER 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService -- Generating 25 transactions for month: DECEMBER 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService --   First transaction date: DECEMBER 2025
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService -- Generating 26 transactions for month: JANUARY 2026
+16:43:40.838 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JANUARY 2026
+16:43:40.839 [main] INFO com.finsight.service.DemoDataService -- Generating 28 transactions for month: FEBRUARY 2026
+16:43:40.839 [main] INFO com.finsight.service.DemoDataService --   First transaction date: FEBRUARY 2026
+16:43:40.839 [main] INFO com.finsight.service.DemoDataService -- Generating 30 transactions for month: MARCH 2026
+16:43:40.839 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MARCH 2026
+16:43:40.839 [main] INFO com.finsight.service.DemoDataService -- Generated 227 total transactions across 12 months
+16:43:40.867 [main] INFO com.finsight.service.DemoDataService -- Generated 227 demo transactions (0 fraud alerts) for user 1
+16:43:40.873 [main] INFO com.finsight.service.DemoDataService -- Starting demo transaction generation. Current date: 2026-03-09T16:43:40.873022700
+16:43:40.874 [main] INFO com.finsight.service.DemoDataService -- Generating 12 transactions for month: APRIL 2025
+16:43:40.874 [main] INFO com.finsight.service.DemoDataService --   First transaction date: APRIL 2025
+16:43:40.874 [main] INFO com.finsight.service.DemoDataService -- Generating 14 transactions for month: MAY 2025
+16:43:40.874 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MAY 2025
+16:43:40.874 [main] INFO com.finsight.service.DemoDataService -- Generating 15 transactions for month: JUNE 2025
+16:43:40.875 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JUNE 2025
+16:43:40.875 [main] INFO com.finsight.service.DemoDataService -- Generating 16 transactions for month: JULY 2025
+16:43:40.875 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JULY 2025
+16:43:40.875 [main] INFO com.finsight.service.DemoDataService -- Generating 18 transactions for month: AUGUST 2025
+16:43:40.875 [main] INFO com.finsight.service.DemoDataService --   First transaction date: AUGUST 2025
+16:43:40.875 [main] INFO com.finsight.service.DemoDataService -- Generating 20 transactions for month: SEPTEMBER 2025
+16:43:40.875 [main] INFO com.finsight.service.DemoDataService --   First transaction date: SEPTEMBER 2025
+16:43:40.875 [main] INFO com.finsight.service.DemoDataService -- Generating 22 transactions for month: OCTOBER 2025
+16:43:40.876 [main] INFO com.finsight.service.DemoDataService --   First transaction date: OCTOBER 2025
+16:43:40.876 [main] INFO com.finsight.service.DemoDataService -- Generating 24 transactions for month: NOVEMBER 2025
+16:43:40.876 [main] INFO com.finsight.service.DemoDataService --   First transaction date: NOVEMBER 2025
+16:43:40.876 [main] INFO com.finsight.service.DemoDataService -- Generating 25 transactions for month: DECEMBER 2025
+16:43:40.876 [main] INFO com.finsight.service.DemoDataService --   First transaction date: DECEMBER 2025
+16:43:40.876 [main] INFO com.finsight.service.DemoDataService -- Generating 26 transactions for month: JANUARY 2026
+16:43:40.876 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JANUARY 2026
+16:43:40.877 [main] INFO com.finsight.service.DemoDataService -- Generating 28 transactions for month: FEBRUARY 2026
+16:43:40.877 [main] INFO com.finsight.service.DemoDataService --   First transaction date: FEBRUARY 2026
+16:43:40.877 [main] INFO com.finsight.service.DemoDataService -- Generating 30 transactions for month: MARCH 2026
+16:43:40.877 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MARCH 2026
+16:43:40.877 [main] INFO com.finsight.service.DemoDataService -- Generated 227 total transactions across 12 months
+16:43:40.918 [main] INFO com.finsight.service.DemoDataService -- Generated 227 demo transactions (0 fraud alerts) for user 1
+]]></system-out>
+  </testcase>
+  <testcase name="seedUserIfEmpty_UserNotFound_ThrowsException" classname="com.finsight.service.DemoDataServiceTest" time="0.015"/>
+  <testcase name="demoTransactions_IncludeFraudScenarios" classname="com.finsight.service.DemoDataServiceTest" time="0.039">
+    <system-out><![CDATA[16:43:40.946 [main] INFO com.finsight.service.DemoDataService -- Starting demo transaction generation. Current date: 2026-03-09T16:43:40.946847900
+16:43:40.947 [main] INFO com.finsight.service.DemoDataService -- Generating 12 transactions for month: APRIL 2025
+16:43:40.947 [main] INFO com.finsight.service.DemoDataService --   First transaction date: APRIL 2025
+16:43:40.947 [main] INFO com.finsight.service.DemoDataService -- Generating 14 transactions for month: MAY 2025
+16:43:40.948 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MAY 2025
+16:43:40.948 [main] INFO com.finsight.service.DemoDataService -- Generating 15 transactions for month: JUNE 2025
+16:43:40.948 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JUNE 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService -- Generating 16 transactions for month: JULY 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JULY 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService -- Generating 18 transactions for month: AUGUST 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService --   First transaction date: AUGUST 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService -- Generating 20 transactions for month: SEPTEMBER 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService --   First transaction date: SEPTEMBER 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService -- Generating 22 transactions for month: OCTOBER 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService --   First transaction date: OCTOBER 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService -- Generating 24 transactions for month: NOVEMBER 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService --   First transaction date: NOVEMBER 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService -- Generating 25 transactions for month: DECEMBER 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService --   First transaction date: DECEMBER 2025
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService -- Generating 26 transactions for month: JANUARY 2026
+16:43:40.949 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JANUARY 2026
+16:43:40.950 [main] INFO com.finsight.service.DemoDataService -- Generating 28 transactions for month: FEBRUARY 2026
+16:43:40.950 [main] INFO com.finsight.service.DemoDataService --   First transaction date: FEBRUARY 2026
+16:43:40.950 [main] INFO com.finsight.service.DemoDataService -- Generating 30 transactions for month: MARCH 2026
+16:43:40.950 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MARCH 2026
+16:43:40.950 [main] INFO com.finsight.service.DemoDataService -- Generated 227 total transactions across 12 months
+16:43:40.951 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 5 with severity HIGH
+16:43:40.951 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 5 with score 85.0 (HIGH)
+16:43:40.952 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 15 with severity HIGH
+16:43:40.952 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 15 with score 85.0 (HIGH)
+16:43:40.953 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 25 with severity HIGH
+16:43:40.953 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 25 with score 85.0 (HIGH)
+16:43:40.953 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 29 with severity HIGH
+16:43:40.953 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 29 with score 85.0 (HIGH)
+16:43:40.953 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 49 with severity HIGH
+16:43:40.953 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 49 with score 85.0 (HIGH)
+16:43:40.954 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 51 with severity HIGH
+16:43:40.954 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 51 with score 85.0 (HIGH)
+16:43:40.954 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 57 with severity HIGH
+16:43:40.954 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 57 with score 85.0 (HIGH)
+16:43:40.954 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 59 with severity HIGH
+16:43:40.954 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 59 with score 85.0 (HIGH)
+16:43:40.954 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 63 with severity HIGH
+16:43:40.954 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 63 with score 85.0 (HIGH)
+16:43:40.955 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 85 with severity HIGH
+16:43:40.955 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 85 with score 85.0 (HIGH)
+16:43:40.955 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 89 with severity HIGH
+16:43:40.955 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 89 with score 85.0 (HIGH)
+16:43:40.956 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 93 with severity HIGH
+16:43:40.956 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 93 with score 85.0 (HIGH)
+16:43:40.956 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 113 with severity HIGH
+16:43:40.956 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 113 with score 85.0 (HIGH)
+16:43:40.957 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 119 with severity HIGH
+16:43:40.957 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 119 with score 85.0 (HIGH)
+16:43:40.957 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 143 with severity HIGH
+16:43:40.957 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 143 with score 85.0 (HIGH)
+16:43:40.958 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 145 with severity HIGH
+16:43:40.958 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 145 with score 85.0 (HIGH)
+16:43:40.959 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 157 with severity HIGH
+16:43:40.959 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 157 with score 85.0 (HIGH)
+16:43:40.960 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 185 with severity HIGH
+16:43:40.960 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 185 with score 85.0 (HIGH)
+16:43:40.961 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 205 with severity HIGH
+16:43:40.961 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 205 with score 85.0 (HIGH)
+16:43:40.961 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 219 with severity HIGH
+16:43:40.961 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 219 with score 85.0 (HIGH)
+16:43:40.963 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 247 with severity HIGH
+16:43:40.963 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 247 with score 85.0 (HIGH)
+16:43:40.964 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 257 with severity HIGH
+16:43:40.964 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 257 with score 85.0 (HIGH)
+16:43:40.964 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 265 with severity HIGH
+16:43:40.964 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 265 with score 85.0 (HIGH)
+16:43:40.965 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 283 with severity HIGH
+16:43:40.966 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 283 with score 85.0 (HIGH)
+16:43:40.967 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 295 with severity HIGH
+16:43:40.967 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 295 with score 85.0 (HIGH)
+16:43:40.968 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 305 with severity HIGH
+16:43:40.968 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 305 with score 85.0 (HIGH)
+16:43:40.971 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 341 with severity HIGH
+16:43:40.971 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 341 with score 85.0 (HIGH)
+16:43:40.971 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 343 with severity HIGH
+16:43:40.971 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 343 with score 85.0 (HIGH)
+16:43:40.972 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 345 with severity HIGH
+16:43:40.972 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 345 with score 85.0 (HIGH)
+16:43:40.972 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 355 with severity HIGH
+16:43:40.972 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 355 with score 85.0 (HIGH)
+16:43:40.973 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 363 with severity HIGH
+16:43:40.973 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 363 with score 85.0 (HIGH)
+16:43:40.974 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 385 with severity HIGH
+16:43:40.974 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 385 with score 85.0 (HIGH)
+16:43:40.976 [main] WARN com.finsight.service.DemoDataService -- Created fraud alert for transaction 439 with severity HIGH
+16:43:40.976 [main] INFO com.finsight.service.DemoDataService -- Created fraud alert for demo transaction 439 with score 85.0 (HIGH)
+16:43:40.976 [main] INFO com.finsight.service.DemoDataService -- Generated 227 demo transactions (33 fraud alerts) for user 1
+]]></system-out>
+  </testcase>
+  <testcase name="transactions_HaveValidCategories" classname="com.finsight.service.DemoDataServiceTest" time="0.041">
+    <system-out><![CDATA[16:43:40.989 [main] INFO com.finsight.service.DemoDataService -- Starting demo transaction generation. Current date: 2026-03-09T16:43:40.989015
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService -- Generating 12 transactions for month: APRIL 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService --   First transaction date: APRIL 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService -- Generating 14 transactions for month: MAY 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MAY 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService -- Generating 15 transactions for month: JUNE 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JUNE 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService -- Generating 16 transactions for month: JULY 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JULY 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService -- Generating 18 transactions for month: AUGUST 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService --   First transaction date: AUGUST 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService -- Generating 20 transactions for month: SEPTEMBER 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService --   First transaction date: SEPTEMBER 2025
+16:43:40.990 [main] INFO com.finsight.service.DemoDataService -- Generating 22 transactions for month: OCTOBER 2025
+16:43:40.991 [main] INFO com.finsight.service.DemoDataService --   First transaction date: OCTOBER 2025
+16:43:40.991 [main] INFO com.finsight.service.DemoDataService -- Generating 24 transactions for month: NOVEMBER 2025
+16:43:40.991 [main] INFO com.finsight.service.DemoDataService --   First transaction date: NOVEMBER 2025
+16:43:40.991 [main] INFO com.finsight.service.DemoDataService -- Generating 25 transactions for month: DECEMBER 2025
+16:43:40.991 [main] INFO com.finsight.service.DemoDataService --   First transaction date: DECEMBER 2025
+16:43:40.991 [main] INFO com.finsight.service.DemoDataService -- Generating 26 transactions for month: JANUARY 2026
+16:43:40.991 [main] INFO com.finsight.service.DemoDataService --   First transaction date: JANUARY 2026
+16:43:40.991 [main] INFO com.finsight.service.DemoDataService -- Generating 28 transactions for month: FEBRUARY 2026
+16:43:40.991 [main] INFO com.finsight.service.DemoDataService --   First transaction date: FEBRUARY 2026
+16:43:40.992 [main] INFO com.finsight.service.DemoDataService -- Generating 30 transactions for month: MARCH 2026
+16:43:40.992 [main] INFO com.finsight.service.DemoDataService --   First transaction date: MARCH 2026
+16:43:40.992 [main] INFO com.finsight.service.DemoDataService -- Generated 227 total transactions across 12 months
+16:43:41.016 [main] INFO com.finsight.service.DemoDataService -- Generated 227 demo transactions (0 fraud alerts) for user 1
+]]></system-out>
+  </testcase>
+</testsuite>

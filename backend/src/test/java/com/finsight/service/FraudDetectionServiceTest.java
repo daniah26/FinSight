@@ -48,7 +48,7 @@ class FraudDetectionServiceTest {
         Transaction transaction = createTransaction(BigDecimal.valueOf(400), "groceries");
         lenient().when(transactionRepository.calculateAverageAmount(any())).thenReturn(BigDecimal.valueOf(100));
         lenient().when(transactionRepository.countByUserAndTransactionDateBetween(any(), any(), any())).thenReturn(0L);
-        lenient().when(transactionRepository.findTopByUserOrderByTransactionDateDesc(any())).thenReturn(Optional.empty());
+        lenient().when(transactionRepository.findByUserOrderByTransactionDateDesc(any())).thenReturn(List.of());
         lenient().when(transactionRepository.findDistinctCategoriesByUser(any())).thenReturn(List.of("groceries"));
         
         // When
@@ -56,7 +56,7 @@ class FraudDetectionServiceTest {
         
         // Then
         assertThat(result.getFraudScore()).isGreaterThanOrEqualTo(30.0);
-        assertThat(result.getReasons()).contains("Amount exceeds 3x user average");
+        assertThat(result.getReasons()).anyMatch(reason -> reason.contains("exceeds 3x user average"));
     }
     
     @Test
@@ -65,7 +65,7 @@ class FraudDetectionServiceTest {
         Transaction transaction = createTransaction(BigDecimal.valueOf(50), "groceries");
         lenient().when(transactionRepository.calculateAverageAmount(any())).thenReturn(BigDecimal.valueOf(100));
         lenient().when(transactionRepository.countByUserAndTransactionDateBetween(any(), any(), any())).thenReturn(5L);
-        lenient().when(transactionRepository.findTopByUserOrderByTransactionDateDesc(any())).thenReturn(Optional.empty());
+        lenient().when(transactionRepository.findByUserOrderByTransactionDateDesc(any())).thenReturn(List.of());
         lenient().when(transactionRepository.findDistinctCategoriesByUser(any())).thenReturn(List.of("groceries"));
         
         // When
@@ -73,7 +73,7 @@ class FraudDetectionServiceTest {
         
         // Then
         assertThat(result.getFraudScore()).isGreaterThanOrEqualTo(25.0);
-        assertThat(result.getReasons()).contains("5+ transactions in 10 minutes");
+        assertThat(result.getReasons()).contains("5 or more transactions within 10 minutes");
     }
     
     @Test
@@ -88,7 +88,7 @@ class FraudDetectionServiceTest {
         
         when(transactionRepository.calculateAverageAmount(any())).thenReturn(BigDecimal.valueOf(100));
         when(transactionRepository.countByUserAndTransactionDateBetween(any(), any(), any())).thenReturn(0L);
-        when(transactionRepository.findTopByUserOrderByTransactionDateDesc(any())).thenReturn(Optional.of(lastTransaction));
+        when(transactionRepository.findByUserOrderByTransactionDateDesc(any())).thenReturn(List.of(lastTransaction));
         when(transactionRepository.findDistinctCategoriesByUser(any())).thenReturn(List.of("groceries"));
         
         // When
@@ -96,7 +96,7 @@ class FraudDetectionServiceTest {
         
         // Then
         assertThat(result.getFraudScore()).isGreaterThanOrEqualTo(25.0);
-        assertThat(result.getReasons()).contains("Different location within 2 hours");
+        assertThat(result.getReasons()).contains("Different location within 2 hours of previous transaction");
     }
     
     @Test
@@ -105,7 +105,7 @@ class FraudDetectionServiceTest {
         Transaction transaction = createTransaction(BigDecimal.valueOf(50), "entertainment");
         lenient().when(transactionRepository.calculateAverageAmount(any())).thenReturn(BigDecimal.valueOf(100));
         lenient().when(transactionRepository.countByUserAndTransactionDateBetween(any(), any(), any())).thenReturn(0L);
-        lenient().when(transactionRepository.findTopByUserOrderByTransactionDateDesc(any())).thenReturn(Optional.empty());
+        lenient().when(transactionRepository.findByUserOrderByTransactionDateDesc(any())).thenReturn(List.of());
         lenient().when(transactionRepository.findDistinctCategoriesByUser(any())).thenReturn(List.of("groceries", "utilities"));
         
         // When
@@ -113,7 +113,7 @@ class FraudDetectionServiceTest {
         
         // Then
         assertThat(result.getFraudScore()).isGreaterThanOrEqualTo(20.0);
-        assertThat(result.getReasons()).contains("New category for user");
+        assertThat(result.getReasons()).contains("First time using category: entertainment");
     }
     
     @Test
@@ -122,7 +122,7 @@ class FraudDetectionServiceTest {
         Transaction transaction = createTransaction(BigDecimal.valueOf(50), "groceries");
         lenient().when(transactionRepository.calculateAverageAmount(any())).thenReturn(BigDecimal.valueOf(100));
         lenient().when(transactionRepository.countByUserAndTransactionDateBetween(any(), any(), any())).thenReturn(0L);
-        lenient().when(transactionRepository.findTopByUserOrderByTransactionDateDesc(any())).thenReturn(Optional.empty());
+        lenient().when(transactionRepository.findByUserOrderByTransactionDateDesc(any())).thenReturn(List.of());
         lenient().when(transactionRepository.findDistinctCategoriesByUser(any())).thenReturn(List.of("groceries"));
         
         // When
@@ -140,7 +140,7 @@ class FraudDetectionServiceTest {
         Transaction transaction = createTransaction(BigDecimal.valueOf(400), "entertainment");
         lenient().when(transactionRepository.calculateAverageAmount(any())).thenReturn(BigDecimal.valueOf(100));
         lenient().when(transactionRepository.countByUserAndTransactionDateBetween(any(), any(), any())).thenReturn(5L);
-        lenient().when(transactionRepository.findTopByUserOrderByTransactionDateDesc(any())).thenReturn(Optional.empty());
+        lenient().when(transactionRepository.findByUserOrderByTransactionDateDesc(any())).thenReturn(List.of());
         lenient().when(transactionRepository.findDistinctCategoriesByUser(any())).thenReturn(List.of("groceries"));
         
         // When
