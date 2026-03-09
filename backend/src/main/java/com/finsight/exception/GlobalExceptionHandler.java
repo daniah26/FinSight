@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -38,6 +39,22 @@ public class GlobalExceptionHandler {
             .error("Bad Request")
             .message("Validation failed")
             .errors(errors)
+            .path(request.getDescription(false).replace("uri=", ""))
+            .build();
+        
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+    
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleMissingParams(
+            MissingServletRequestParameterException ex, WebRequest request) {
+        
+        ErrorResponse errorResponse = ErrorResponse.builder()
+            .timestamp(LocalDateTime.now())
+            .status(400)
+            .error("Bad Request")
+            .message("Required parameter '" + ex.getParameterName() + "' is missing")
             .path(request.getDescription(false).replace("uri=", ""))
             .build();
         
