@@ -33,14 +33,14 @@ spring:
     time-zone: UTC
 
 server:
-  port: 8080
+  port: 8389
 
 jwt:
   secret: finsight-secret-key-change-in-production-minimum-256-bits-required
   expiration: 86400000 # 24 hours
 
 cors:
-  allowed-origins: http://localhost:3000
+  allowed-origins: http://localhost:5733
 
 logging:
   level:

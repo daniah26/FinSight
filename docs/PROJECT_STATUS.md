@@ -172,9 +172,9 @@ docker-compose down
 ```
 
 Access the application:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8080/api
-- H2 Console: http://localhost:8080/h2-console
+- Frontend: http://localhost:5733
+- Backend API: http://localhost:8389/api
+- H2 Console: http://localhost:8389/h2-console
 
 ### Option 2: Local Development
 
@@ -193,8 +193,8 @@ npm install
 npm start
 ```
 
-The backend will start on `http://localhost:8080`
-The frontend will start on `http://localhost:3000`
+The backend will start on `http://localhost:8389`
+The frontend will start on `http://localhost:5733`
 
 ## Technology Stack
 

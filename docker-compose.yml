@@ -7,14 +7,14 @@ services:
       dockerfile: Dockerfile
     container_name: finsight-backend
     ports:
-      - "8080:8080"
+      - "8389:8389"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:h2:mem:finsight
       - SPRING_H2_CONSOLE_ENABLED=true
       - JAVA_OPTS=-Xmx512m -Xms256m
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8389/actuator/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -29,14 +29,14 @@ services:
       dockerfile: Dockerfile
     container_name: finsight-frontend
     ports:
-      - "3000:80"
+      - "5733:5733"
     environment:
-      - REACT_APP_API_URL=http://localhost:8080/api
+      - REACT_APP_API_URL=http://localhost:8389/api
     depends_on:
       backend:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1"]
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5733 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3

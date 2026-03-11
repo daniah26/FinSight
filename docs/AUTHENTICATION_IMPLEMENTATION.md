@@ -146,7 +146,7 @@ All endpoints already filter by `userId`:
 
 **1. Test Signup**
 ```bash
-curl -X POST http://localhost:8080/api/auth/signup \
+curl -X POST http://localhost:8389/api/auth/signup \
   -H "Content-Type: application/json" \
   -d '{
     "username": "testuser",
@@ -157,7 +157,7 @@ curl -X POST http://localhost:8080/api/auth/signup \
 
 **2. Test Login**
 ```bash
-curl -X POST http://localhost:8080/api/auth/login \
+curl -X POST http://localhost:8389/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "username": "testuser",
@@ -168,13 +168,13 @@ curl -X POST http://localhost:8080/api/auth/login \
 **3. Test with Token**
 ```bash
 # Get transactions for user
-curl -X GET "http://localhost:8080/api/transactions?userId=1" \
+curl -X GET "http://localhost:8389/api/transactions?userId=1" \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
 ### Frontend Testing (After Implementation)
 
-1. Go to http://localhost:3000/signup
+1. Go to http://localhost:5733/signup
 2. Create account
 3. Should redirect to dashboard with demo data
 4. Logout

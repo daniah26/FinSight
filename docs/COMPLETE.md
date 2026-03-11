@@ -54,8 +54,8 @@ The FinSight Financial Transaction Tracker has been **fully implemented** with a
 docker-compose up --build
 
 # Access the application
-# Frontend: http://localhost:3000
-# Backend: http://localhost:8080/api
+# Frontend: http://localhost:5733
+# Backend: http://localhost:8389/api
 ```
 
 ## 🎨 UI Highlights
@@ -216,7 +216,7 @@ The project is **100% complete** and ready for:
 ## 🚀 Next Steps
 
 1. **Try it out**: `docker-compose up --build`
-2. **Explore features**: Visit http://localhost:3000
+2. **Explore features**: Visit http://localhost:5733
 3. **Read docs**: Check QUICKSTART.md
 4. **Deploy**: Follow DEPLOYMENT.md for production
 

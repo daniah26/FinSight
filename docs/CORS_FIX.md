@@ -18,7 +18,7 @@ cannot contain the special value "*" since that cannot be set on the
 3. These two settings are incompatible in Spring
 
 When `allowCredentials` is true, you cannot use the wildcard `*` for origins. You must either:
-- Use specific origins (e.g., `http://localhost:3000`)
+- Use specific origins (e.g., `http://localhost:5733`)
 - Use `allowedOriginPatterns("*")` instead of `allowedOrigins("*")`
 
 ## Fixes Applied
@@ -97,13 +97,13 @@ docker-compose up --build
 ### Verify Fix
 ```bash
 # Test API endpoint
-curl http://localhost:8080/api/summary?userId=1
+curl http://localhost:8389/api/summary?userId=1
 
 # Should return JSON data, not 400 error
 ```
 
 ### Test in Browser
-1. Open http://localhost:3000
+1. Open http://localhost:5733
 2. Dashboard should load without errors
 3. Check browser console - no 400 errors
 4. Try creating a transaction

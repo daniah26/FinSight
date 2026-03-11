@@ -26,8 +26,8 @@ finsight-frontend  | nginx started
 
 ### Step 3: Access the Application
 Open your browser and go to:
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8080/api
+- **Frontend**: http://localhost:5733
+- **Backend API**: http://localhost:8389/api
 
 ## 🎯 First Time Usage
 
@@ -73,7 +73,7 @@ If you want to run in development mode:
 cd backend
 mvn spring-boot:run
 ```
-Access at: http://localhost:8080
+Access at: http://localhost:8389
 
 ### Frontend
 ```bash
@@ -81,7 +81,7 @@ cd frontend
 npm install
 npm start
 ```
-Access at: http://localhost:3000
+Access at: http://localhost:5733
 
 ## 🛑 Stop the Application
 
@@ -107,8 +107,8 @@ The system automatically generates demo data including:
 If ports 3000 or 8080 are already in use:
 ```bash
 # Check what's using the port
-lsof -i :3000
-lsof -i :8080
+lsof -i :5733
+lsof -i :8389
 
 # Kill the process or change ports in docker-compose.yml
 ```
@@ -126,14 +126,14 @@ docker-compose up --build --force-recreate
 
 ### Frontend Can't Connect to Backend
 - Make sure both services are running
-- Check that backend is healthy: http://localhost:8080/actuator/health
+- Check that backend is healthy: http://localhost:8389/actuator/health
 - Verify CORS is enabled in backend
 
 ## 📚 API Documentation
 
 ### Create Transaction
 ```bash
-curl -X POST http://localhost:8080/api/transactions \
+curl -X POST http://localhost:8389/api/transactions \
   -H "Content-Type: application/json" \
   -d '{
     "userId": 1,
@@ -147,12 +147,12 @@ curl -X POST http://localhost:8080/api/transactions \
 
 ### Get Dashboard Summary
 ```bash
-curl http://localhost:8080/api/summary?userId=1
+curl http://localhost:8389/api/summary?userId=1
 ```
 
 ### Get Transactions
 ```bash
-curl "http://localhost:8080/api/transactions?userId=1&type=EXPENSE&page=0&size=20"
+curl "http://localhost:8389/api/transactions?userId=1&type=EXPENSE&page=0&size=20"
 ```
 
 ## 🎓 Learn More

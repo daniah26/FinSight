@@ -49,9 +49,9 @@ docker-compose up -d --build
 ```
 
 The application will be available at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8080/api
-- H2 Console: http://localhost:8080/h2-console
+- Frontend: http://localhost:5733
+- Backend API: http://localhost:8389/api
+- H2 Console: http://localhost:8389/h2-console
 
 ### Run Locally (Development)
 

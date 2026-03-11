@@ -25,10 +25,10 @@ docker-compose logs -f
 ```
 
 ### Service URLs
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8080/api
-- Health Check: http://localhost:8080/actuator/health
-- H2 Console: http://localhost:8080/h2-console
+- Frontend: http://localhost:5733
+- Backend API: http://localhost:8389/api
+- Health Check: http://localhost:8389/actuator/health
+- H2 Console: http://localhost:8389/h2-console
 
 ### Docker Commands
 
@@ -125,7 +125,7 @@ server {
     server_name your-domain.com;
 
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:5733;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -134,7 +134,7 @@ server {
     }
 
     location /api {
-        proxy_pass http://localhost:8080/api;
+        proxy_pass http://localhost:8389/api;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
@@ -254,10 +254,10 @@ REACT_APP_ENV=production
 
 ```bash
 # Backend health
-curl http://localhost:8080/actuator/health
+curl http://localhost:8389/actuator/health
 
 # Frontend health
-curl http://localhost:3000
+curl http://localhost:5733
 
 # Docker health
 docker-compose ps
@@ -328,8 +328,8 @@ docker exec finsight-backend \
 **Port conflicts**:
 ```bash
 # Find process using port
-lsof -i :8080
-lsof -i :3000
+lsof -i :8389
+lsof -i :5733
 
 # Kill process
 kill -9 <PID>
@@ -382,9 +382,9 @@ services:
 Use nginx as load balancer:
 ```nginx
 upstream backend {
-    server backend1:8080;
-    server backend2:8080;
-    server backend3:8080;
+    server backend1:8389;
+    server backend2:8389;
+    server backend3:8389;
 }
 
 server {

@@ -1706,12 +1706,12 @@ services:
         - linux/amd64
         - linux/arm64
     ports:
-      - "8080:8080"
+      - "8389:8389"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:h2:mem:finsight
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8389/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -1727,9 +1727,9 @@ services:
         - linux/amd64
         - linux/arm64
     ports:
-      - "3000:3000"
+      - "5733:5733"
     environment:
-      - REACT_APP_API_URL=http://localhost:8080/api
+      - REACT_APP_API_URL=http://localhost:8389/api
     depends_on:
       backend:
         condition: service_healthy
@@ -1793,7 +1793,7 @@ public class HealthController {
 **application.properties**
 ```properties
 # Server Configuration
-server.port=8080
+server.port=8389
 spring.application.name=FinSight
 
 # Database Configuration

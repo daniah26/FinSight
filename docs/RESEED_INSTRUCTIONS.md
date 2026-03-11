@@ -8,12 +8,12 @@ You need to reseed the demo data for your user account. Here are three ways to d
 
 ### Option 1: Using curl (Recommended)
 ```bash
-curl -X POST "http://localhost:8080/api/transactions/reseed-demo?userId=1"
+curl -X POST "http://localhost:8389/api/transactions/reseed-demo?userId=1"
 ```
 
 ### Option 2: Using PowerShell
 ```powershell
-Invoke-WebRequest -Uri "http://localhost:8080/api/transactions/reseed-demo?userId=1" -Method POST
+Invoke-WebRequest -Uri "http://localhost:8389/api/transactions/reseed-demo?userId=1" -Method POST
 ```
 
 ### Option 3: Using your browser
@@ -21,7 +21,7 @@ Invoke-WebRequest -Uri "http://localhost:8080/api/transactions/reseed-demo?userI
 2. Go to the Console tab
 3. Paste and run:
 ```javascript
-fetch('http://localhost:8080/api/transactions/reseed-demo?userId=1', { method: 'POST' })
+fetch('http://localhost:8389/api/transactions/reseed-demo?userId=1', { method: 'POST' })
   .then(r => r.json())
   .then(d => console.log(d));
 ```

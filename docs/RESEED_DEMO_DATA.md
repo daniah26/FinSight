@@ -50,18 +50,18 @@ I've enhanced the demo data service to create **5 different fraud scenarios** th
 Replace `YOUR_USER_ID` with your actual user ID (usually 1 for the first user):
 
 ```bash
-curl -X POST "http://localhost:8080/api/transactions/reseed-demo?userId=YOUR_USER_ID"
+curl -X POST "http://localhost:8389/api/transactions/reseed-demo?userId=YOUR_USER_ID"
 ```
 
 Example:
 ```bash
-curl -X POST "http://localhost:8080/api/transactions/reseed-demo?userId=1"
+curl -X POST "http://localhost:8389/api/transactions/reseed-demo?userId=1"
 ```
 
 ### Option 2: Using PowerShell (Windows)
 
 ```powershell
-Invoke-WebRequest -Uri "http://localhost:8080/api/transactions/reseed-demo?userId=1" -Method POST
+Invoke-WebRequest -Uri "http://localhost:8389/api/transactions/reseed-demo?userId=1" -Method POST
 ```
 
 ### Option 3: Using Browser Console
@@ -71,7 +71,7 @@ Invoke-WebRequest -Uri "http://localhost:8080/api/transactions/reseed-demo?userI
 3. Run this JavaScript:
 
 ```javascript
-fetch('http://localhost:8080/api/transactions/reseed-demo?userId=1', {
+fetch('http://localhost:8389/api/transactions/reseed-demo?userId=1', {
   method: 'POST'
 })
 .then(response => response.json())

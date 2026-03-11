@@ -66,7 +66,7 @@ The auth pages match your existing design:
 
 ### 1. New User Flow
 ```
-1. Visit http://localhost:3000 → Redirects to /login
+1. Visit http://localhost:5733 → Redirects to /login
 2. Click "Sign up" → Goes to /signup
 3. Fill form and submit → Creates account
 4. Automatically logged in → Redirects to /dashboard
@@ -76,7 +76,7 @@ The auth pages match your existing design:
 
 ### 2. Returning User Flow
 ```
-1. Visit http://localhost:3000 → Redirects to /login
+1. Visit http://localhost:5733 → Redirects to /login
 2. Enter username and password
 3. Click "Sign In" → Logs in
 4. Redirects to /dashboard
@@ -101,7 +101,7 @@ docker-compose up --build
 ### Test Flow
 
 **1. First Visit**
-- Go to http://localhost:3000
+- Go to http://localhost:5733
 - Should redirect to /login
 
 **2. Create Account**

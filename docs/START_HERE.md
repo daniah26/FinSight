@@ -10,8 +10,8 @@ cd /path/to/finsight
 docker-compose up --build
 
 # 3. Open browser
-# Frontend: http://localhost:3000
-# Backend: http://localhost:8080/api
+# Frontend: http://localhost:5733
+# Backend: http://localhost:8389/api
 ```
 
 That's it! 🎉
@@ -158,18 +158,18 @@ cd frontend && npm install && npm start
 ## 🎯 Key URLs
 
 When running:
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8080/api
-- **Health Check**: http://localhost:8080/actuator/health
-- **H2 Console**: http://localhost:8080/h2-console
+- **Frontend**: http://localhost:5733
+- **Backend API**: http://localhost:8389/api
+- **Health Check**: http://localhost:8389/actuator/health
+- **H2 Console**: http://localhost:8389/h2-console
 
 ## 🐛 Troubleshooting
 
 ### Port Already in Use
 ```bash
 # Check what's using the port
-lsof -i :3000
-lsof -i :8080
+lsof -i :5733
+lsof -i :8389
 
 # Or change ports in docker-compose.yml
 ```
@@ -183,7 +183,7 @@ docker-compose up --build --force-recreate
 
 ### Can't Connect to Backend
 1. Check backend is running: `docker-compose ps`
-2. Check health: http://localhost:8080/actuator/health
+2. Check health: http://localhost:8389/actuator/health
 3. View logs: `docker-compose logs backend`
 
 **For more help, see TROUBLESHOOTING.md**
@@ -236,7 +236,7 @@ docker-compose up --build --force-recreate
 ## 🎉 Next Steps
 
 1. **Start the app**: `docker-compose up --build`
-2. **Open browser**: http://localhost:3000
+2. **Open browser**: http://localhost:5733
 3. **Explore features**: Dashboard → Transactions → Fraud → Subscriptions
 4. **Read docs**: Check QUICKSTART.md for details
 5. **Have fun!** 🚀
@@ -265,6 +265,6 @@ docker-compose up --build --force-recreate
 docker-compose up --build
 ```
 
-Then open: **http://localhost:3000**
+Then open: **http://localhost:5733**
 
 **Enjoy FinSight!** 🎉💰
