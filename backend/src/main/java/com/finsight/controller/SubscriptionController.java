@@ -24,7 +24,7 @@ public class SubscriptionController {
     private final SubscriptionRepository subscriptionRepository;
     
     @GetMapping
-    public ResponseEntity<List<SubscriptionDto>> getSubscriptions(@RequestParam Long userId) {
+    public ResponseEntity<List<SubscriptionDto>> getSubscriptions(@RequestParam(required = true) Long userId) {
         // Get existing subscriptions instead of re-detecting every time
         List<Subscription> subscriptions = subscriptionRepository.findByUserId(userId);
         List<SubscriptionDto> dtos = subscriptions.stream()
@@ -34,7 +34,7 @@ public class SubscriptionController {
     }
     
     @PostMapping("/detect")
-    public ResponseEntity<List<SubscriptionDto>> detectSubscriptions(@RequestParam Long userId) {
+    public ResponseEntity<List<SubscriptionDto>> detectSubscriptions(@RequestParam(required = true) Long userId) {
         // Separate endpoint for detecting/refreshing subscriptions
         List<Subscription> subscriptions = subscriptionDetectorService.detectSubscriptions(userId);
         List<SubscriptionDto> dtos = subscriptions.stream()
@@ -44,7 +44,7 @@ public class SubscriptionController {
     }
     
     @PostMapping
-    public ResponseEntity<SubscriptionDto> createSubscription(@Valid @RequestBody SubscriptionDto dto, @RequestParam Long userId) {
+    public ResponseEntity<SubscriptionDto> createSubscription(@Valid @RequestBody SubscriptionDto dto, @RequestParam(required = true) Long userId) {
         // Additional validation for date range (25-35 days)
         if (dto.getLastPaidDate() != null && dto.getNextDueDate() != null) {
             long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(dto.getLastPaidDate(), dto.getNextDueDate());
@@ -77,7 +77,7 @@ public class SubscriptionController {
     
     @GetMapping("/due-soon")
     public ResponseEntity<List<SubscriptionDto>> getDueSoon(
-            @RequestParam Long userId,
+            @RequestParam(required = true) Long userId,
             @RequestParam(required = false, defaultValue = "7") int days) {
         
         LocalDate start = LocalDate.now();
@@ -93,7 +93,7 @@ public class SubscriptionController {
     @PutMapping("/{id}/ignore")
     public ResponseEntity<SubscriptionDto> ignoreSubscription(
             @PathVariable Long id,
-            @RequestParam Long userId) {
+            @RequestParam(required = true) Long userId) {
         
         Subscription subscription = subscriptionRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Subscription not found: " + id));
