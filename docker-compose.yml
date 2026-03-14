@@ -8,8 +8,6 @@ services:
     container_name: finsight-frontend
     ports:
       - "5733:5733"
-    environment:
-      - VITE_API_URL=/api
     depends_on:
       backend:
         condition: service_healthy
