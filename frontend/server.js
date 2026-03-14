@@ -5,19 +5,28 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5733;
 
-// Serve static files from dist directory
-app.use(express.static(path.join(__dirname, 'dist')));
-
-// API proxy to backend
+// API proxy to backend — must come BEFORE static files
 app.use('/api', createProxyMiddleware({
   target: 'http://backend:8389',
   changeOrigin: true,
-  pathRewrite: {
-    '^/api': '/api', // keep the /api prefix
-  },
+  on: {
+    error: (err, req, res) => {
+      console.error('Proxy error:', err.message);
+      res.status(502).json({ error: 'Backend unavailable' });
+    }
+  }
 }));
 
-// Handle React Router (return index.html for all non-API routes)
+// Also proxy /actuator (health checks etc.)
+app.use('/actuator', createProxyMiddleware({
+  target: 'http://backend:8389',
+  changeOrigin: true,
+}));
+
+// Serve static files from dist directory
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Handle React Router — return index.html for all non-API routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
