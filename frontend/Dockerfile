@@ -14,16 +14,13 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# List contents to debug
-RUN ls -la dist/
-
-# Production stage - simple approach
+# Production stage - simple static serving
 FROM nginx:alpine
 
 # Copy built app
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Simple nginx config for debugging
+# Simple nginx config - just serve static files
 RUN echo 'server { \
     listen 80; \
     server_name _; \
@@ -32,14 +29,7 @@ RUN echo 'server { \
     location / { \
         try_files $uri $uri/ /index.html; \
     } \
-    location /api/ { \
-        proxy_pass http://backend:8389/api/; \
-        proxy_set_header Host $host; \
-    } \
 }' > /etc/nginx/conf.d/default.conf
-
-# Debug: show what files are in the html directory
-RUN ls -la /usr/share/nginx/html/
 
 EXPOSE 80
 
