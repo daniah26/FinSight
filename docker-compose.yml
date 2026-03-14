@@ -1,6 +1,26 @@
 version: '3.8'
 
 services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: finsight-frontend
+    expose:
+      - "5733"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5733 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - finsight-network
+    restart: unless-stopped
+
   backend:
     build:
       context: ./backend
@@ -19,28 +39,6 @@ services:
       timeout: 5s
       retries: 10
       start_period: 60s
-    networks:
-      - finsight-network
-    restart: unless-stopped
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: finsight-frontend
-    ports:
-      - "80:5733"
-    environment:
-      - REACT_APP_API_URL=https://finsight.sandbox.array.world/api
-    depends_on:
-      backend:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5733 || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
     networks:
       - finsight-network
     restart: unless-stopped
