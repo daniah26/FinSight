@@ -26,8 +26,8 @@ app.use('/actuator', createProxyMiddleware({
 // Serve static files from dist directory
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Handle React Router — return index.html for all non-API routes
-app.use((req, res) => {
+// Handle React Router — Express 5 requires explicit wildcard syntax
+app.get('/{*path}', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
