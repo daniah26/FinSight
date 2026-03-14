@@ -14,17 +14,33 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Production stage with nginx
+# List contents to debug
+RUN ls -la dist/
+
+# Production stage - simple approach
 FROM nginx:alpine
 
-# Copy nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy built app from build stage
+# Copy built app
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expose port
-EXPOSE 5733
+# Simple nginx config for debugging
+RUN echo 'server { \
+    listen 80; \
+    server_name _; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+    location /api/ { \
+        proxy_pass http://backend:8389/api/; \
+        proxy_set_header Host $host; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
-# Start nginx
+# Debug: show what files are in the html directory
+RUN ls -la /usr/share/nginx/html/
+
+EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]
