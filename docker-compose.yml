@@ -6,8 +6,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: finsight-frontend
-    expose:
-      - "5733"
+    ports:
+      - "5733:5733"
     depends_on:
       backend:
         condition: service_healthy
@@ -20,6 +20,9 @@ services:
     networks:
       - finsight-network
     restart: unless-stopped
+    labels:
+      - "dokploy.domain=finsight.sandbox.array.world"
+      - "dokploy.port=5733"
 
   backend:
     build:
