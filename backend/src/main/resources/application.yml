@@ -44,9 +44,6 @@ jwt:
   secret: finsight-secret-key-change-in-production-minimum-256-bits-required
   expiration: 86400000 # 24 hours
 
-cors:
-  allowed-origins: https://finsight.sandbox.array.world,http://localhost:5733
-
 logging:
   level:
     com.finsight: DEBUG

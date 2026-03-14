@@ -11,20 +11,19 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Set build-time environment variable
-ENV VITE_API_URL=/api
-
 # Build the application
 RUN npm run build
 
-# Production stage with nginx
-FROM nginx:alpine
+# Production stage with simple HTTP server
+FROM node:20-alpine
 
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
+
+# Install serve globally
+RUN npm install -g serve
 
 # Copy built app from build stage
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist ./dist
 
 # Expose port
 EXPOSE 5733
@@ -33,5 +32,5 @@ EXPOSE 5733
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:5733 || exit 1
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start serve on port 5733
+CMD ["serve", "-s", "dist", "-l", "5733"]
