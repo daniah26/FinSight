@@ -36,6 +36,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(Arrays.asList(
+            "https://finsight.sandbox.array.world:5733",
             "https://finsight.sandbox.array.world",
             "http://localhost:*",
             "https://localhost:*"
