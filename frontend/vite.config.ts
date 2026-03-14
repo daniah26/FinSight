@@ -10,5 +10,22 @@ export default defineConfig({
   },
   server: {
     port: 5733,
+    proxy: {
+      '/api': {
+        target: 'http://backend:8389',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
   },
+  preview: {
+    port: 5733,
+    proxy: {
+      '/api': {
+        target: 'http://backend:8389',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
 });

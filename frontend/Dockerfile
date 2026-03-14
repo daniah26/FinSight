@@ -14,13 +14,17 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Production stage with simple HTTP server
+# Production stage with Vite preview
 FROM node:20-alpine
 
 WORKDIR /app
 
-# Install serve globally
-RUN npm install -g serve
+# Copy package files for production dependencies
+COPY package*.json ./
+COPY vite.config.ts ./
+
+# Install only production dependencies and vite
+RUN npm ci --only=production && npm install vite
 
 # Copy built app from build stage
 COPY --from=build /app/dist ./dist
@@ -32,5 +36,5 @@ EXPOSE 5733
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:5733 || exit 1
 
-# Start serve on port 5733
-CMD ["serve", "-s", "dist", "-l", "5733"]
+# Start Vite preview server with proxy
+CMD ["npx", "vite", "preview", "--host", "0.0.0.0", "--port", "5733"]
