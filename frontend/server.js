@@ -27,7 +27,7 @@ app.use('/actuator', createProxyMiddleware({
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Handle React Router — return index.html for all non-API routes
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
