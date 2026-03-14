@@ -6,8 +6,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: finsight-backend
-    ports:
-      - "8389:8389"
+    expose:
+      - "8389"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:h2:mem:finsight
@@ -29,9 +29,9 @@ services:
       dockerfile: Dockerfile
     container_name: finsight-frontend
     ports:
-      - "5733:5733"
+      - "80:5733"
     environment:
-      - REACT_APP_API_URL=http://localhost:8389/api
+      - REACT_APP_API_URL=https://finsight.sandbox.array.world/api
     depends_on:
       backend:
         condition: service_healthy
