@@ -2,13 +2,12 @@ version: '3.8'
 
 services:
   frontend:
-  
     build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: finsight-frontend
     expose:
-  - "5733"
+      - "5733"
     depends_on:
       backend:
         condition: service_healthy
