@@ -14,16 +14,13 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Production stage with Express server
+# Production stage - simple static server
 FROM node:20-alpine
 
 WORKDIR /app
 
-# Install production dependencies
-RUN npm init -y && npm install express http-proxy-middleware
-
-# Copy server file
-COPY server.js ./
+# Install serve globally
+RUN npm install -g serve
 
 # Copy built app from build stage
 COPY --from=build /app/dist ./dist
@@ -33,7 +30,7 @@ EXPOSE 5733
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:5733/health || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://localhost:5733 || exit 1
 
-# Start the server
-CMD ["node", "server.js"]
+# Start serve with SPA support
+CMD ["serve", "-s", "dist", "-l", "5733"]

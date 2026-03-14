@@ -23,8 +23,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: finsight-backend
-    expose:
-      - "8389"
+    ports:
+      - "8389:8389"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:h2:mem:finsight
