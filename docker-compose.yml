@@ -30,7 +30,7 @@ services:
         VITE_API_URL: "http://finsight-backend:8389"
     container_name: finsight-frontend
     ports:
-      - "5733:80"
+      - "5733:5733"
     depends_on:
       - backend
     networks:

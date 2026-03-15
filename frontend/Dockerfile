@@ -13,7 +13,7 @@ RUN npm run build
 FROM nginx:alpine
 
 RUN printf 'server {\n\
-    listen 80;\n\
+    listen 5733;\n\
     root /usr/share/nginx/html;\n\
     index index.html;\n\
     location /api/ {\n\
@@ -28,5 +28,5 @@ RUN printf 'server {\n\
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 5733
 CMD ["nginx", "-g", "daemon off;"]
