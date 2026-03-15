@@ -12,7 +12,7 @@ export default defineConfig({
     port: 5733,
     proxy: {
       '/api': {
-        target: 'http://backend:8389',
+        target: 'http://localhost:8389',
         changeOrigin: true,
         secure: false,
       }
@@ -22,7 +22,7 @@ export default defineConfig({
     port: 5733,
     proxy: {
       '/api': {
-        target: 'http://backend:8389',
+        target: 'http://localhost:8389',
         changeOrigin: true,
         secure: false,
       }
