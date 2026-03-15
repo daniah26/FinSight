@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -16,26 +16,95 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [touched, setTouched] = useState({
+    username: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
+  const [validationErrors, setValidationErrors] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  
   const navigate = useNavigate();
   const { login } = useAuth();
   const { theme, toggleTheme } = useTheme();
+
+  // Validation functions
+  const validateUsername = (username: string) => {
+    if (username.length === 0) return '';
+    if (username.length < 3) return 'Username must be at least 3 characters';
+    if (username.length > 20) return 'Username must not exceed 20 characters';
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) return 'Username can only contain letters, numbers, and underscores';
+    return '';
+  };
+
+  const validateEmail = (email: string) => {
+    if (email.length === 0) return '';
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) return 'Please enter a valid email address (e.g., user@example.com)';
+    return '';
+  };
+
+  const validatePassword = (password: string) => {
+    if (password.length === 0) return '';
+    if (password.length < 8) return 'Password must be at least 8 characters';
+    if (password.length > 128) return 'Password must not exceed 128 characters';
+    if (!/(?=.*[a-z])/.test(password)) return 'Password must contain at least one lowercase letter';
+    if (!/(?=.*[A-Z])/.test(password)) return 'Password must contain at least one uppercase letter';
+    if (!/(?=.*\d)/.test(password)) return 'Password must contain at least one digit';
+    if (!/(?=.*[@$!%*?&])/.test(password)) return 'Password must contain at least one special character (@$!%*?&)';
+    return '';
+  };
+
+  const validateConfirmPassword = (confirmPassword: string, password: string) => {
+    if (confirmPassword.length === 0) return '';
+    if (confirmPassword !== password) return 'Passwords do not match';
+    return '';
+  };
+
+  // Real-time validation
+  useEffect(() => {
+    setValidationErrors({
+      username: touched.username ? validateUsername(formData.username) : '',
+      email: touched.email ? validateEmail(formData.email) : '',
+      password: touched.password ? validatePassword(formData.password) : '',
+      confirmPassword: touched.confirmPassword ? validateConfirmPassword(formData.confirmPassword, formData.password) : '',
+    });
+  }, [formData, touched]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
   };
 
+  const handleBlur = (field: keyof typeof touched) => {
+    setTouched({ ...touched, [field]: true });
+  };
+
   const validateForm = () => {
-    if (formData.username.length < 3) {
-      setError('Username must be at least 3 characters');
+    const usernameError = validateUsername(formData.username);
+    const emailError = validateEmail(formData.email);
+    const passwordError = validatePassword(formData.password);
+    const confirmPasswordError = validateConfirmPassword(formData.confirmPassword, formData.password);
+
+    if (usernameError) {
+      setError(usernameError);
       return false;
     }
-    if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters and contain uppercase, lowercase, digit, and special character');
+    if (emailError) {
+      setError(emailError);
       return false;
     }
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+    if (passwordError) {
+      setError(passwordError);
+      return false;
+    }
+    if (confirmPasswordError) {
+      setError(confirmPasswordError);
       return false;
     }
     return true;
@@ -145,11 +214,24 @@ const Signup = () => {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
+                onBlur={() => handleBlur('username')}
                 required
                 autoFocus
                 placeholder="Choose a username"
-                className="px-4 py-3 bg-input border border-border rounded-lg text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                className={`px-4 py-3 bg-input border rounded-lg text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 transition-all ${
+                  validationErrors.username 
+                    ? 'border-destructive focus:border-destructive focus:ring-destructive/20' 
+                    : touched.username && formData.username && !validationErrors.username
+                    ? 'border-green-500 focus:border-green-500 focus:ring-green-500/20'
+                    : 'border-border focus:border-primary focus:ring-primary/20'
+                }`}
               />
+              {validationErrors.username && (
+                <p className="text-xs text-destructive">{validationErrors.username}</p>
+              )}
+              {!validationErrors.username && touched.username && formData.username && (
+                <p className="text-xs text-green-600">✓ Username is valid</p>
+              )}
             </div>
 
             <div className="flex flex-col gap-1.5">
@@ -159,10 +241,23 @@ const Signup = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                onBlur={() => handleBlur('email')}
                 required
                 placeholder="Enter your email"
-                className="px-4 py-3 bg-input border border-border rounded-lg text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                className={`px-4 py-3 bg-input border rounded-lg text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 transition-all ${
+                  validationErrors.email 
+                    ? 'border-destructive focus:border-destructive focus:ring-destructive/20' 
+                    : touched.email && formData.email && !validationErrors.email
+                    ? 'border-green-500 focus:border-green-500 focus:ring-green-500/20'
+                    : 'border-border focus:border-primary focus:ring-primary/20'
+                }`}
               />
+              {validationErrors.email && (
+                <p className="text-xs text-destructive">{validationErrors.email}</p>
+              )}
+              {!validationErrors.email && touched.email && formData.email && (
+                <p className="text-xs text-green-600">✓ Email is valid</p>
+              )}
             </div>
 
             <div className="flex flex-col gap-1.5">
@@ -173,9 +268,16 @@ const Signup = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
+                  onBlur={() => handleBlur('password')}
                   required
                   placeholder="Create a password"
-                  className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all pr-10"
+                  className={`w-full px-4 py-3 bg-input border rounded-lg text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 transition-all pr-10 ${
+                    validationErrors.password 
+                      ? 'border-destructive focus:border-destructive focus:ring-destructive/20' 
+                      : touched.password && formData.password && !validationErrors.password
+                      ? 'border-green-500 focus:border-green-500 focus:ring-green-500/20'
+                      : 'border-border focus:border-primary focus:ring-primary/20'
+                  }`}
                 />
                 <button
                   type="button"
@@ -185,9 +287,12 @@ const Signup = () => {
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Must be 8+ characters with uppercase, lowercase, digit, and special character (@$!%*?&)
-              </p>
+              {validationErrors.password && (
+                <p className="text-xs text-destructive">{validationErrors.password}</p>
+              )}
+              {!validationErrors.password && touched.password && formData.password && (
+                <p className="text-xs text-green-600">✓ Password meets all requirements</p>
+              )}
             </div>
 
             <div className="flex flex-col gap-1.5">
@@ -197,15 +302,28 @@ const Signup = () => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
+                onBlur={() => handleBlur('confirmPassword')}
                 required
                 placeholder="Confirm your password"
-                className="px-4 py-3 bg-input border border-border rounded-lg text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                className={`px-4 py-3 bg-input border rounded-lg text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 transition-all ${
+                  validationErrors.confirmPassword 
+                    ? 'border-destructive focus:border-destructive focus:ring-destructive/20' 
+                    : touched.confirmPassword && formData.confirmPassword && !validationErrors.confirmPassword
+                    ? 'border-green-500 focus:border-green-500 focus:ring-green-500/20'
+                    : 'border-border focus:border-primary focus:ring-primary/20'
+                }`}
               />
+              {validationErrors.confirmPassword && (
+                <p className="text-xs text-destructive">{validationErrors.confirmPassword}</p>
+              )}
+              {!validationErrors.confirmPassword && touched.confirmPassword && formData.confirmPassword && (
+                <p className="text-xs text-green-600">✓ Passwords match</p>
+              )}
             </div>
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || Object.values(validationErrors).some(error => error !== '')}
               className="w-full py-3 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:bg-accent transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-1 hover:-translate-y-0.5 active:translate-y-0"
             >
               {loading ? 'Creating account…' : 'Sign Up'}
