@@ -26,10 +26,10 @@ export const loginUser = (data: { username: string; password: string }) =>
   api.post('/auth/login', data);
 
 // Transactions
-export const getTransactions = (userId: number, params: Record<string, any> = {}) =>
+export const getTransactions = (userId: number, params: Record<string, unknown> = {}) =>
   api.get('/transactions', { params: { userId, ...params } });
 
-export const getAllTransactions = (userId: number, params: Record<string, any> = {}) =>
+export const getAllTransactions = (userId: number, params: Record<string, unknown> = {}) =>
   api.get('/transactions', {
     params: {
       userId,
