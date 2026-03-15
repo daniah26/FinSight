@@ -17,7 +17,7 @@ RUN printf 'server {\n\
     root /usr/share/nginx/html;\n\
     index index.html;\n\
     location /api/ {\n\
-        proxy_pass http://backend:8389;\n\
+        proxy_pass http://finsight-backend:8389;\n\
         proxy_set_header Host $host;\n\
         proxy_set_header X-Real-IP $remote_addr;\n\
     }\n\
