@@ -1,36 +1,32 @@
-# Multi-stage build for React frontend
 FROM node:20-alpine AS build
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
-
-# Install dependencies
 RUN npm ci
-
-# Copy source code
 COPY . .
 
-# Build the application
+ARG VITE_API_URL=/api
+ENV VITE_API_URL=$VITE_API_URL
+
 RUN npm run build
 
-# Production stage - simple static server
-FROM node:20-alpine
+FROM nginx:alpine
 
-WORKDIR /app
+RUN printf 'server {\n\
+    listen 80;\n\
+    root /usr/share/nginx/html;\n\
+    index index.html;\n\
+    location /api/ {\n\
+        proxy_pass http://finsight-backend:8389;\n\
+        proxy_set_header Host $host;\n\
+        proxy_set_header X-Real-IP $remote_addr;\n\
+    }\n\
+    location / {\n\
+        try_files $uri $uri/ /index.html;\n\
+    }\n\
+}' > /etc/nginx/conf.d/default.conf
 
-# Install serve globally
-RUN npm install -g serve
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy built app from build stage
-COPY --from=build /app/dist ./dist
-
-# Expose port
-EXPOSE 5733
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:5733 || exit 1
-
-# Start serve with SPA support
-CMD ["serve", "-s", "dist", "-l", "5733"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
