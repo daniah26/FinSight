@@ -133,10 +133,10 @@ class AuthControllerTest {
             verifyNoInteractions(authService);
         }
 
-        @Test @DisplayName("400 — password < 6 chars")
+        @Test @DisplayName("400 — password < 8 chars")
         void signup_passwordTooShort_400() throws Exception {
             mockMvc.perform(post("/api/auth/signup").contentType(MediaType.APPLICATION_JSON)
-                            .content(signupJson("alice", "a@b.com", "abc")))
+                            .content(signupJson("alice", "a@b.com", "Pass1!")))
                     .andExpect(status().isBadRequest());
             verifyNoInteractions(authService);
         }
@@ -273,7 +273,7 @@ class AuthControllerTest {
             mockMvc.perform(post("/api/auth/signup")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(signupJson("admin'--", "test@example.com", "Secret123!")))
-                    .andExpect(status().isCreated()); // Should be sanitized by service layer
+                    .andExpect(status().isBadRequest()); // Special characters not allowed in username
         }
 
         @Test @DisplayName("Signup — XSS attempt in username")
@@ -307,14 +307,14 @@ class AuthControllerTest {
         void signup_passwordOnlyNumbers_400() throws Exception {
             mockMvc.perform(post("/api/auth/signup")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(signupJson("alice", "alice@example.com", "123456")))
-                    .andExpect(status().isCreated()); // Validation allows this, but service may reject
+                            .content(signupJson("alice", "alice@example.com", "12345678")))
+                    .andExpect(status().isBadRequest()); // Missing uppercase, lowercase, and special chars
         }
 
         @Test @DisplayName("Signup — very long password accepted")
         void signup_veryLongPassword_201() throws Exception {
             when(authService.signup(any())).thenReturn(signupOk());
-            String longPassword = "A".repeat(100);
+            String longPassword = "Secret123!" + "A".repeat(90); // Valid password pattern + padding
             mockMvc.perform(post("/api/auth/signup")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(signupJson("alice", "alice@example.com", longPassword)))
@@ -454,12 +454,61 @@ class AuthControllerTest {
         }
 
         @Test @DisplayName("Signup — password exactly 6 chars (minimum boundary)")
-        void signup_password6Chars_201() throws Exception {
+        void signup_password8Chars_201() throws Exception {
             when(authService.signup(any())).thenReturn(signupOk());
             mockMvc.perform(post("/api/auth/signup")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(signupJson("alice", "a@b.com", "Pass12")))
+                            .content(signupJson("alice", "a@b.com", "Pass123!")))
                     .andExpect(status().isCreated());
+        }
+
+        @Test @DisplayName("Signup — password missing uppercase letter")
+        void signup_passwordNoUppercase_400() throws Exception {
+            mockMvc.perform(post("/api/auth/signup")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(signupJson("alice", "a@b.com", "pass123!")))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test @DisplayName("Signup — password missing lowercase letter")
+        void signup_passwordNoLowercase_400() throws Exception {
+            mockMvc.perform(post("/api/auth/signup")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(signupJson("alice", "a@b.com", "PASS123!")))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test @DisplayName("Signup — password missing digit")
+        void signup_passwordNoDigit_400() throws Exception {
+            mockMvc.perform(post("/api/auth/signup")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(signupJson("alice", "a@b.com", "Password!")))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test @DisplayName("Signup — password missing special character")
+        void signup_passwordNoSpecial_400() throws Exception {
+            mockMvc.perform(post("/api/auth/signup")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(signupJson("alice", "a@b.com", "Password123")))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test @DisplayName("Signup — username with invalid special characters")
+        void signup_usernameInvalidChars_400() throws Exception {
+            mockMvc.perform(post("/api/auth/signup")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(signupJson("alice-bob", "a@b.com", "Secret123!")))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test @DisplayName("Signup — password too long (>128 chars)")
+        void signup_passwordTooLong_400() throws Exception {
+            String longPassword = "Secret123!" + "A".repeat(120); // 130 chars total
+            mockMvc.perform(post("/api/auth/signup")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(signupJson("alice", "a@b.com", longPassword)))
+                    .andExpect(status().isBadRequest());
         }
     }
 }

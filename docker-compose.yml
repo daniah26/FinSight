@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: finsight-backend
     environment:
+      TZ: Asia/Bahrain
       SPRING_PROFILES_ACTIVE: docker
       SPRING_DATASOURCE_URL: jdbc:h2:mem:finsight;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
@@ -34,6 +35,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: finsight-frontend
+    environment:
+      TZ: Asia/Bahrain
     ports:
       - "5733:5733"
     depends_on:

@@ -84,17 +84,8 @@ const Login = () => {
           </p>
         </motion.div>
 
-        <div className="flex gap-8 relative z-10">
-          {[
-            { value: '99%', label: 'Fraud detection' },
-            { value: 'Real-time', label: 'Monitoring' },
-            { value: '256-bit', label: 'Encryption' },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <div className="font-display text-2xl font-extrabold text-primary">{stat.value}</div>
-              <div className="text-xs text-muted-foreground tracking-wider uppercase">{stat.label}</div>
-            </div>
-          ))}
+        <div className="relative z-10">
+          {/* Empty space where stats used to be */}
         </div>
       </div>
 

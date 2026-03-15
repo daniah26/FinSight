@@ -30,8 +30,8 @@ const Signup = () => {
       setError('Username must be at least 3 characters');
       return false;
     }
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters');
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters and contain uppercase, lowercase, digit, and special character');
       return false;
     }
     if (formData.password !== formData.confirmPassword) {
@@ -102,21 +102,12 @@ const Signup = () => {
             Start tracking<br /><span className="text-primary">smarter today.</span>
           </h2>
           <p className="text-muted-foreground text-base leading-relaxed max-w-sm">
-            Join thousands who trust FinSight to keep their finances transparent and secure.
+            Join users who trust FinSight to keep their finances transparent and secure.
           </p>
         </motion.div>
 
-        <div className="flex gap-8 relative z-10">
-          {[
-            { value: '50K+', label: 'Active users' },
-            { value: '$2.1M', label: 'Fraud prevented' },
-            { value: '4.9★', label: 'User rating' },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <div className="font-display text-2xl font-extrabold text-primary">{stat.value}</div>
-              <div className="text-xs text-muted-foreground tracking-wider uppercase">{stat.label}</div>
-            </div>
-          ))}
+        <div className="relative z-10">
+          {/* Empty space where stats used to be */}
         </div>
       </div>
 
@@ -194,6 +185,9 @@ const Signup = () => {
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
+              <p className="text-xs text-muted-foreground">
+                Must be 8+ characters with uppercase, lowercase, digit, and special character (@$!%*?&)
+              </p>
             </div>
 
             <div className="flex flex-col gap-1.5">

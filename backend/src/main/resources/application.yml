@@ -30,7 +30,7 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: false
-    time-zone: UTC
+    time-zone: Asia/Bahrain
 
 server:
   port: 8389
